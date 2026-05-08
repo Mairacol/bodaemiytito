@@ -18,14 +18,31 @@
 body {
   margin: 0;
   font-family: 'Courier Prime', monospace;
+  -webkit-font-smoothing: antialiased;
+  /* Eliminamos el fondo del body para que no entre en conflicto */
+  background: none; 
+}
+
+/* Creamos una capa fija que no se mueva ni se deforme */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Se queda detrás de todo */
+  
+  /* Tus propiedades originales movidas aquí */
   background-image: url('images/fondo.png');
   background-size: cover;
-  background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-color: rgba(255, 255, 255, 0.2);
   background-blend-mode: overlay;
-  -webkit-font-smoothing: antialiased;
+
+  /* Este es el truco para que iOS no lo procese mal */
+  will-change: transform; 
 }
 
 /* =========================================

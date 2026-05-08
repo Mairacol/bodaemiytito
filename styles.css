@@ -718,6 +718,11 @@ button:disabled {
   color: white !important;
   transform: translateY(-1px);
 }
+/* Específicamente para el botón de hoteles */
+.btn-hotels {
+    width: auto;
+    padding: 10px 40px; /* Puedes ajustar el padding para que se vea más estilizado */
+}
 .music-btn {
   /* Posicionamiento blindado */
   position: fixed !important;

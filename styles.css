@@ -717,45 +717,39 @@ button:disabled {
   transform: translateY(-1px);
 }
 .music-btn {
-  /* Anulamos cualquier estilo de sistema */
-  -webkit-appearance: none !important;
-  -moz-appearance: none !important;
-  appearance: none !important;
-  
-  /* Forzamos el círculo y el fondo */
-  background-color: #c4002f !important;
-  border: none !important;
-  border-radius: 50% !important;
-  
-  /* Dimensiones fijas */
-  width: 48px !important;
-  height: 48px !important;
-  
   /* Posicionamiento */
   position: fixed;
   bottom: 20px;
   right: 20px;
   z-index: 1000;
 
-  /* Centrado total */
+  /* Diseño del círculo */
+  width: 50px !important;
+  height: 50px !important;
+  background-color: #c4002f !important;
+  border-radius: 50% !important;
+  
+  /* Centrado del icono */
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  padding: 0 !important;
-  margin: 0 !important;
   
-  /* Reset de sombras y brillos de iOS */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  -webkit-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  outline: none !important;
+  /* Reset de estilos de sistema */
+  cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
 }
 
-/* Para que el icono no se vea como un emoji azul/feo */
-.music-btn span, .music-btn svg {
-  color: white !important;
-  fill: white !important;
-  pointer-events: none;
+/* Estilo para el icono SVG dentro del botón */
+.music-btn svg {
+  width: 24px;
+  height: 24px;
+  color: white; /* Esto hace que el icono sea blanco */
+}
+
+.music-btn:active {
+  transform: scale(0.95);
 }
 .hidden { display: none; }
 

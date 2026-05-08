@@ -122,10 +122,14 @@ window.addEventListener('click', function(e) {
     }
 });
 // ... (Aquí sigue tu código de Música, Intro, Validación y Confirmación)
+/* =========================================
+   LÓGICA DE MÚSICA (CORREGIDA)
+   ========================================= */
 const music = document.getElementById('music');
 const btn = document.getElementById('musicBtn');
 const svgPath = document.getElementById('svgPath');
 
+// Función para cambiar el dibujo del icono (SVG)
 const actualizarIcono = () => {
   if (music.paused) {
     // Dibujo de PLAY (Triángulo)
@@ -136,9 +140,30 @@ const actualizarIcono = () => {
   }
 };
 
-// Tu lógica de clic se mantiene igual de bien, solo cambiamos cómo se ve
+// ESTO ES LO QUE HACIA QUE ARRANQUE "SOLO"
+// Al primer toque en cualquier parte de la pantalla, la música arranca
+const intentarReproducir = () => {
+  music.play()
+    .then(() => {
+      actualizarIcono();
+      // Una vez que arrancó, quitamos estos escuchadores para no saturar
+      document.removeEventListener('click', intentarReproducir);
+      document.removeEventListener('touchstart', intentarReproducir);
+    })
+    .catch(() => {
+      console.log("Esperando interacción para iniciar audio...");
+    });
+};
+
+// Escuchamos clics y toques en toda la página
+document.addEventListener('click', intentarReproducir);
+document.addEventListener('touchstart', intentarReproducir);
+
+// Lógica del botón circular (para pausar/reproducir manualmente)
 btn.addEventListener('click', (e) => {
-  e.stopPropagation();
+  // Importante: evitamos que el clic en el botón active el 'intentarReproducir' global
+  e.stopPropagation(); 
+  
   if (music.paused) {
     music.play().then(actualizarIcono);
   } else {
@@ -147,8 +172,8 @@ btn.addEventListener('click', (e) => {
   }
 });
 
-// Esto es para que si arranca por el "intentarReproducir", el icono se actualice
-music.onplay = actualizarIcono;
+// Sincronización extra por si la música cambia de estado por otro motivo
+music.onplay  = actualizarIcono;
 music.onpause = actualizarIcono;
 /* =========================================
    INTRO SOBRE

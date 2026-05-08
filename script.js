@@ -123,50 +123,54 @@ window.addEventListener('click', function(e) {
 });
 // ... (Aquí sigue tu código de Música, Intro, Validación y Confirmación)
 /* =========================================
-   LÓGICA DE MÚSICA (CORREGIDA)
+   LÓGICA DE MÚSICA (FUSIÓN DEFINITIVA)
    ========================================= */
 const music = document.getElementById('music');
-const shield = document.getElementById('tap-shield');
 const btn = document.getElementById('musicBtn');
 const svgPath = document.getElementById('svgPath');
 
-// Función para actualizar el dibujo del botón
+// Esta función ahora cambia el DIBUJO, no el texto
 const actualizarIcono = () => {
   if (music.paused) {
-    svgPath.setAttribute('d', 'M8 5v14l11-7z'); // Play
+    // Dibujo de PLAY (Triángulo)
+    svgPath.setAttribute('d', 'M8 5v14l11-7z');
   } else {
-    svgPath.setAttribute('d', 'M6 19h4V5H6v14zm8-14v14h4V5h-4z'); // Pausa
+    // Dibujo de PAUSA (Dos barras)
+    svgPath.setAttribute('d', 'M6 19h4V5H6v14zm8-14v14h4V5h-4z');
   }
 };
 
-// Función maestra para el inicio "automático"
-const iniciarTodo = () => {
-  music.play();
-  actualizarIcono();
-  if (shield) shield.remove(); // Quitamos el telón para que puedan tocar el resto de la web
-  
-  // Limpiamos los eventos para que no se ejecuten más
-  window.removeEventListener('touchstart', iniciarTodo);
-  window.removeEventListener('click', iniciarTodo);
+// TU LÓGICA ORIGINAL: Intentar reproducir al primer toque del usuario
+const intentarReproducir = () => {
+  music.play()
+    .then(() => {
+      actualizarIcono();
+      // Limpiamos los eventos globales una vez que arrancó
+      document.removeEventListener('click', intentarReproducir);
+      document.removeEventListener('touchstart', intentarReproducir);
+    })
+    .catch(() => {
+      console.log("Esperando interacción para el audio...");
+    });
 };
 
-// Escuchamos el primer toque en la ventana o en el escudo
-window.addEventListener('click', iniciarTodo, { once: true });
-window.addEventListener('touchstart', iniciarTodo, { once: true });
-
-// Lógica del botón (para que el usuario pueda pausar después)
+// El clic manual en el botón
 btn.addEventListener('click', (e) => {
-  e.stopPropagation(); // Evita que el clic llegue al 'window'
+  e.stopPropagation(); // Evita que el clic suba al document
   if (music.paused) {
-    music.play();
+    music.play().then(actualizarIcono);
   } else {
     music.pause();
+    actualizarIcono();
   }
-  actualizarIcono();
 });
 
-// Sincronización
-music.onplay = actualizarIcono;
+// ESCUCHADORES GLOBALES (Como los tenías antes)
+document.addEventListener('click', intentarReproducir);
+document.addEventListener('touchstart', intentarReproducir);
+
+// Sincronización de estados
+music.onplay  = actualizarIcono;
 music.onpause = actualizarIcono;
 /* =========================================
    INTRO SOBRE

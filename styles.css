@@ -697,6 +697,7 @@ button:disabled {
   display: inline-block;
   margin-top: 20px;
   padding: 10px 25px;
+  width: auto;
   background: transparent;
   color: #c4002f;
   border: 1px solid #c4002f;

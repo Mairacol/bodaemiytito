@@ -2,7 +2,7 @@
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxJLD2SW9nusTjYvMLK5Wc1dJFudeVSY1b6Gwi_3A7cCvEi6v6n3kNHfBO0v5r1zsxv9w/exec";
 
 const params = new URLSearchParams(window.location.search);
-const family = params.get('familia') || 'Familia Invitada';
+const family = params.get('familia') || '';
 const slots = parseInt(params.get('slots')) || 1;
 
 const familyName = document.getElementById('familyName');

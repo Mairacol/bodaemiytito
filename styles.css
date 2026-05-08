@@ -717,45 +717,45 @@ button:disabled {
   transform: translateY(-1px);
 }
 .music-btn {
-  /* --- RESET TOTAL PARA IOS --- */
-  -webkit-appearance: none;    /* Mata el estilo de "botón de sistema" */
-  -moz-appearance: none;
-  appearance: none;
-  -webkit-tap-highlight-color: transparent; /* Quita el flash gris feo al tocarlo */
-  outline: none;
-  border: none;
-  box-sizing: border-box;
-
-  /* --- POSICIONAMIENTO --- */
+  /* Anulamos cualquier estilo de sistema */
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  
+  /* Forzamos el círculo y el fondo */
+  background-color: #c4002f !important;
+  border: none !important;
+  border-radius: 50% !important;
+  
+  /* Dimensiones fijas */
+  width: 48px !important;
+  height: 48px !important;
+  
+  /* Posicionamiento */
   position: fixed;
   bottom: 20px;
   right: 20px;
   z-index: 1000;
 
-  /* --- DISEÑO CIRCULAR --- */
-  width: 48px;  /* Un poquito más grande para que sea fácil de tocar en móvil */
-  height: 48px;
-  border-radius: 50% !important; /* Forzamos el círculo */
-  background-color: #c4002f;
-  color: #ffffff;
+  /* Centrado total */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  margin: 0 !important;
   
-  /* --- CENTRADO DEL ICONO --- */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  margin: 0;
-  
-  /* --- EFECTOS --- */
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(196, 0, 47, 0.3); /* Sombra suave del color de la marca */
-  transition: transform 0.3s ease, background-color 0.3s ease;
+  /* Reset de sombras y brillos de iOS */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* Evitamos que el botón cambie a gris o azul al hacerle clic */
-.music-btn:active, .music-btn:focus {
-  background-color: #a00026;
-  outline: none;
+/* Para que el icono no se vea como un emoji azul/feo */
+.music-btn span, .music-btn svg {
+  color: white !important;
+  fill: white !important;
+  pointer-events: none;
 }
 .hidden { display: none; }
 

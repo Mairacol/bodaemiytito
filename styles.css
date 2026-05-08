@@ -716,42 +716,46 @@ button:disabled {
   color: white !important;
   transform: translateY(-1px);
 }
-.music-control-final {
-  /* Posicionamiento forzado */
-  position: fixed !important;
-  bottom: 25px !important;
-  right: 25px !important;
-  left: auto !important;
-  top: auto !important;
+.music-btn {
+  /* --- RESET TOTAL PARA IOS --- */
+  -webkit-appearance: none;    /* Mata el estilo de "botón de sistema" */
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent; /* Quita el flash gris feo al tocarlo */
+  outline: none;
+  border: none;
+  box-sizing: border-box;
+
+  /* --- POSICIONAMIENTO --- */
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+
+  /* --- DISEÑO CIRCULAR --- */
+  width: 48px;  /* Un poquito más grande para que sea fácil de tocar en móvil */
+  height: 48px;
+  border-radius: 50% !important; /* Forzamos el círculo */
+  background-color: #c4002f;
+  color: #ffffff;
   
-  /* Estética del círculo */
-  width: 50px !important;
-  height: 50px !important;
-  background-color: #c4002f !important; /* Tu rojo */
-  border-radius: 50% !important;
-  z-index: 99999 !important;
+  /* --- CENTRADO DEL ICONO --- */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
   
-  /* Centrado del icono */
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  
-  /* Eliminar sombras raras de iOS */
-  -webkit-appearance: none !important;
-  -webkit-tap-highlight-color: transparent;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
+  /* --- EFECTOS --- */
   cursor: pointer;
+  box-shadow: 0 4px 12px rgba(196, 0, 47, 0.3); /* Sombra suave del color de la marca */
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-.icon-container svg {
-  width: 20px;
-  height: 20px;
-  display: block;
-}
-
-/* Estado cuando está sonando (opcional: puedes cambiar el icono por JS) */
-.music-control-final.playing svg {
-  /* Aquí podrías poner el icono de pausa si quieres */
+/* Evitamos que el botón cambie a gris o azul al hacerle clic */
+.music-btn:active, .music-btn:focus {
+  background-color: #a00026;
+  outline: none;
 }
 .hidden { display: none; }
 

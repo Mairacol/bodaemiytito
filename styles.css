@@ -716,40 +716,36 @@ button:disabled {
   color: white !important;
   transform: translateY(-1px);
 }
-.music-btn {
-  /* Posicionamiento */
+.music-btn-new {
+  /* Reseteo total de Safari */
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  -webkit-tap-highlight-color: transparent;
+  
+  /* Posicionamiento y Estética */
   position: fixed;
   bottom: 20px;
   right: 20px;
-  z-index: 1000;
-
-  /* Diseño del círculo */
   width: 50px !important;
   height: 50px !important;
-  background-color: #c4002f !important;
+  background-color: #c4002f !important; /* Rojo Atelier */
   border-radius: 50% !important;
+  z-index: 9999;
   
   /* Centrado del icono */
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   
-  /* Reset de estilos de sistema */
+  /* Sombra para que no se pierda con el fondo */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s ease;
 }
 
-/* Estilo para el icono SVG dentro del botón */
-.music-btn svg {
-  width: 24px;
-  height: 24px;
-  color: white; /* Esto hace que el icono sea blanco */
-}
-
-.music-btn:active {
-  transform: scale(0.95);
+.music-btn-new svg {
+  width: 25px;
+  height: 25px;
+  display: block;
 }
 .hidden { display: none; }
 

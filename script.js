@@ -339,3 +339,4 @@ window.onclick = function(e) {
         document.querySelectorAll('.custom-select').forEach(s => s.classList.remove('open'));
     }
 }
+

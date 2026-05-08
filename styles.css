@@ -18,7 +18,7 @@
 body {
   margin: 0;
   font-family: 'Courier Prime', monospace;
-  background-image: url('/images/fondo.png');
+  background-image: url('images/fondo.png');
   background-size: cover;
   background-attachment: fixed;
   background-position: center;

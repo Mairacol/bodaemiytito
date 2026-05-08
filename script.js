@@ -123,41 +123,38 @@ window.addEventListener('click', function(e) {
 });
 // ... (Aquí sigue tu código de Música, Intro, Validación y Confirmación)
 /* =========================================
-   LÓGICA DE MÚSICA (CON ELIMINACIÓN DE ESCUDO)
+   LÓGICA DE MÚSICA (VERSIÓN FINAL SÓLIDA)
    ========================================= */
 const music = document.getElementById('music');
 const btn = document.getElementById('musicBtn');
 const svgPath = document.getElementById('svgPath');
-const shield = document.getElementById('tap-shield'); // <--- Agregamos esta referencia
 
+// Función para cambiar el icono
 const actualizarIcono = () => {
   if (music.paused) {
-    svgPath.setAttribute('d', 'M8 5v14l11-7z');
+    svgPath.setAttribute('d', 'M8 5v14l11-7z'); // Play
   } else {
-    svgPath.setAttribute('d', 'M6 19h4V5H6v14zm8-14v14h4V5h-4z');
+    svgPath.setAttribute('d', 'M6 19h4V5H6v14zm8-14v14h4V5h-4z'); // Pausa
   }
 };
 
-const intentarReproducir = () => {
-  music.play()
-    .then(() => {
-      actualizarIcono();
-      // QUITAMOS EL ESCUDO para que el usuario pueda interactuar con la web
-      if (shield) {
-          shield.remove(); 
-      }
-      document.removeEventListener('click', intentarReproducir);
-      document.removeEventListener('touchstart', intentarReproducir);
-    })
-    .catch(() => {
-      console.log("Esperando interacción...");
-    });
+// Función para arrancar la música al primer toque
+const arrancarMusica = () => {
+  music.play().then(() => {
+    actualizarIcono();
+    // Una vez que arrancó, dejamos de escuchar toques globales
+    document.removeEventListener('click', arrancarMusica);
+    document.removeEventListener('touchstart', arrancarMusica);
+  }).catch(err => console.log("Esperando interacción..."));
 };
 
-// Si el usuario toca el botón directamente, también quitamos el escudo
+// Escuchamos el primer toque en CUALQUIER LADO de la pantalla
+document.addEventListener('click', arrancarMusica);
+document.addEventListener('touchstart', arrancarMusica);
+
+// Control manual del botón circular
 btn.addEventListener('click', (e) => {
-  e.stopPropagation();
-  if (shield) shield.remove(); // <--- IMPORTANTE
+  e.stopPropagation(); // IMPORTANTE: evita que el clic "suba" al document
   if (music.paused) {
     music.play().then(actualizarIcono);
   } else {
@@ -166,8 +163,9 @@ btn.addEventListener('click', (e) => {
   }
 });
 
-document.addEventListener('click', intentarReproducir);
-document.addEventListener('touchstart', intentarReproducir);
+// Sincronizar por si pasa algo externo
+music.onplay = actualizarIcono;
+music.onpause = actualizarIcono;
 /* =========================================
    INTRO SOBRE
    ========================================= */

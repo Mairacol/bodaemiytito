@@ -81,6 +81,7 @@ body::before {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+  transition: opacity 1s ease, visibility 1s ease;
 }
 
 .envelope-wrapper {

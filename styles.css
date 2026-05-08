@@ -716,27 +716,43 @@ button:disabled {
   color: white !important;
   transform: translateY(-1px);
 }
-
 .music-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #c4002f;
-  font-family: 'Courier Prime', monospace;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 45px;
-  height: 45px;
-  z-index: 1000;
+  /* Posicionamiento blindado */
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  left: auto !important;
+  top: auto !important;
+  
+  /* Reset de Safari */
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  -webkit-tap-highlight-color: transparent;
+  
+  /* Estética */
+  background: #c4002f !important;
+  border: none !important;
+  border-radius: 50% !important;
+  width: 48px !important;
+  height: 48px !important;
+  z-index: 99999 !important; /* Más alto que todo */
   cursor: pointer;
+  
+  /* Centrado del icono */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   transition: transform 0.3s ease;
-  padding: 0;
-  font-size: 18px;
 }
 
 .music-btn:hover { transform: scale(1.1); }
 
+/* Asegura que el SVG sea blanco */
+.music-btn svg {
+  display: block;
+}
 .hidden { display: none; }
 
 footer {

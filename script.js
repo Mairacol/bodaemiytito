@@ -122,29 +122,21 @@ window.addEventListener('click', function(e) {
     }
 });
 // ... (Aquí sigue tu código de Música, Intro, Validación y Confirmación)
-/* =========================================
-   MÚSICA
-   ========================================= */
 const music = document.getElementById('music');
 const btn = document.getElementById('musicBtn');
+const svgPath = document.getElementById('svgPath');
 
 const actualizarIcono = () => {
-  btn.textContent = music.paused ? '♫' : '⏸';
+  if (music.paused) {
+    // Dibujo de PLAY (Triángulo)
+    svgPath.setAttribute('d', 'M8 5v14l11-7z');
+  } else {
+    // Dibujo de PAUSA (Dos barras)
+    svgPath.setAttribute('d', 'M6 19h4V5H6v14zm8-14v14h4V5h-4z');
+  }
 };
 
-// Intentar reproducir al primer toque del usuario
-const intentarReproducir = () => {
-  music.play()
-    .then(() => {
-      actualizarIcono();
-      document.removeEventListener('click', intentarReproducir);
-      document.removeEventListener('touchstart', intentarReproducir);
-    })
-    .catch(() => {
-      console.log("El navegador bloqueó el inicio automático.");
-    });
-};
-
+// Tu lógica de clic se mantiene igual de bien, solo cambiamos cómo se ve
 btn.addEventListener('click', (e) => {
   e.stopPropagation();
   if (music.paused) {
@@ -155,12 +147,9 @@ btn.addEventListener('click', (e) => {
   }
 });
 
-document.addEventListener('click', intentarReproducir);
-document.addEventListener('touchstart', intentarReproducir);
-
-music.onplay  = actualizarIcono;
+// Esto es para que si arranca por el "intentarReproducir", el icono se actualice
+music.onplay = actualizarIcono;
 music.onpause = actualizarIcono;
-
 /* =========================================
    INTRO SOBRE
    ========================================= */

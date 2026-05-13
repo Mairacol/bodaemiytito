@@ -171,17 +171,27 @@ music.onpause = actualizarIcono;
    ========================================= */
 window.addEventListener('load', () => {
   const intro = document.getElementById('intro-overlay');
-
-  setTimeout(() => {
+  
+  // Suponiendo que tu sello tiene la clase 'sello' o 'wax-seal'
+  // Si no tienes un ID específico, puedes usar el contenedor 'intro' directamente
+  intro.addEventListener('click', () => {
+    
+    // 1. Iniciamos la animación de apertura del sobre
     intro.classList.add('is-open');
-  }, 800);
 
-  setTimeout(() => {
-    intro.classList.add('fade-out');
-    document.body.style.overflow = 'auto';
-  }, 3500);
+    // 2. Esperamos un poco a que termine la animación visual 
+    // antes de desvanecer todo el overlay
+    setTimeout(() => {
+      intro.classList.add('fade-out');
+      document.body.style.overflow = 'auto'; // Habilitar scroll
+      
+      // Opcional: Eliminar el elemento del DOM después de que desaparezca
+      setTimeout(() => {
+        intro.style.display = 'none';
+      }, 1000);
+    }, 2000); // Ajusta este tiempo según lo que dure tu animación de apertura
+  });
 });
-
 /* =========================================
    VALIDACIÓN DEL FORMULARIO
    ========================================= */

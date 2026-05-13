@@ -48,6 +48,33 @@ body::before {
 /* =========================================
    2. INTRO OVERLAY & SOBRE
    ========================================= */
+   .click-hint {
+  position: absolute;
+  top: 110%; /* Lo posiciona justo debajo del sello */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  text-align: center;
+  font-family:  'Courier Prime'; /* O la que uses en tu marca */
+  font-weight: 300;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  color: #8a8a8a; /* Un gris suave */
+  text-transform: uppercase;
+  pointer-events: none; /* Para que si hacen clic en el texto, el clic pase al sello */
+  animation: fadeInOut 2s infinite ease-in-out;
+}
+
+/* Animación sutil de parpadeo para llamar la atención sin molestar */
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* Cursor pointer para el sello */
+.wax-seal {
+  cursor: pointer;
+}
 .unified-trail {
   position: absolute;
   top: 50%;
@@ -685,7 +712,85 @@ button:disabled {
   cursor: not-allowed;
   transform: none;
 }
+/* INSTAGRAM MINIMALISTA (SIN GRILLAS) */
+.instagram-minimal {
+  padding: 100px 20px;
+  text-align: center;
+  /* Mantiene la coherencia con el fondo de las otras secciones */
+  background-color: transparent; 
+}
 
+/* Encabezado de perfil sutil */
+.insta-profile-header {
+  display: flex;
+  flex-direction: column; /* Cambiamos a columna para más aire */
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 50px;
+}
+
+.profile-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 1px solid rgba(139, 0, 0, 0.2); /* Rojo del sello muy suave */
+  padding: 4px;
+}
+
+.profile-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.8;
+}
+
+.profile-info h3 {
+    font-family: 'Courier Prime';
+  font-weight: 400;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  margin: 0;
+  color: #333;
+}
+
+.profile-info p {
+  font-family: 'Courier Prime';
+  font-weight: 300;
+  font-size: 0.75rem;
+  color: #888;
+  margin-top: 5px;
+}
+
+
+
+.insta-invitation {
+  font-family: 'Courier Prime';
+  font-weight: 300;
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 45px;
+  letter-spacing: 1px;
+}
+
+/* Botón de acción tipo link editorial */
+.btn-chusmear {
+  display: inline-block;
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 3px;
+  color: #8b0000; /* El rojo de tu marca */
+  text-decoration: none;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(139, 0, 0, 0.3);
+  padding-bottom: 6px;
+  transition: all 0.4s ease;
+}
+
+.btn-chusmear:hover {
+  border-bottom: 1px solid rgba(139, 0, 0, 1);
+  letter-spacing: 4px; /* Efecto sutil de expansión */
+}
 /* =========================================
    10. PLAYLIST & FOOTER
    ========================================= */

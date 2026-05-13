@@ -285,7 +285,7 @@ body::before {
 .logo-img {
   max-width: 180px;
   height: auto;
-  margin-top: 15px;
+  margin-top: 155px;
   opacity: 0.8;
   filter: brightness(1.1);
 }
@@ -359,7 +359,16 @@ body::before {
   top: 89%;
   left: 24%;
 }
-
+.section-title-fecha{
+    font-family: 'Old Bridges', sans-serif;
+  font-size: clamp(32px, 8vw, 48px);
+  color: #c4002f;
+  font-weight: normal;
+  text-align: center;
+  display: block;
+  width: 100%;
+  margin: 0 auto 30px auto;
+}
 /* =========================================
    6. TÍTULOS
    ========================================= */

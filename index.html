@@ -131,24 +131,24 @@
 
   <!-- HOTELES -->
   <section class="hospedaje-final reveal">
-    <div class="container container-hospedaje">
+  <div class="container container-hospedaje">
 
-      <div class="hospedaje-img-wrapper">
-        <img src="images/hoteles.png" alt="Hoteles" class="hospedaje-img">
-      </div>
-
-      <h2 class="section-title title-hospedaje">HOTELES</h2>
-
-      <p class="hospedaje-description">
-        Para quienes vienen de lejos, les recomendamos estas opciones cercanas al salón.
-      </p>
-
-      <button onclick="openModal()" class="playlist-btn btn-hotels">
-        VER OPCIONES
-      </button>
-
+    <div class="hospedaje-img-wrapper">
+      <img src="images/hoteles.png" alt="Alojamiento y Transporte" class="hospedaje-img">
     </div>
-  </section>
+
+    <h2 class="section-title title-hospedaje">Estadía</h2>
+
+    <p class="hospedaje-description">
+      En caso de necesitar alojamiento o transporte, les recomendamos realizar las reservas con anticipación.
+    </p>
+
+    <button onclick="openModal()" class="playlist-btn btn-hotels">
+      VER OPCIONES
+    </button>
+
+  </div>
+</section>
 <!-- PLAYLIST -->
   <section class="playlist reveal">
     <div class="playlist-inner">
@@ -228,28 +228,66 @@
   <div class="modal-content">
     <span class="close-modal" onclick="closeModal()" role="button" aria-label="Cerrar">&times;</span>
 
-    <h2 id="modalTitle">Nuestra Selección</h2>
-    <p class="modal-subtitle">Opciones elegidas por cercanía y comodidad.</p>
+    <h2 id="modalTitle">Alojamiento</h2>
+    <p class="modal-subtitle">Opciones recomendadas en la zona.</p>
 
     <div class="hotel-list">
+      <h3 class="location-divider">ARROYITO</h3>
       <div class="hotel-item">
-        <div class="hotel-info">
-          <h5>Hotel Boutique Alvear</h5>
-          <p>A 5 minutos del salón. Estilo clásico y elegante.</p>
-        </div>
-        <!-- REEMPLAZAR CON URL REAL -->
-        <a href="#" target="_blank" rel="noopener" class="hotel-link">VER WEB</a>
+        <div class="hotel-info"><h5>Hotel MH</h5></div>
+        <a href="https://share.google/5pjFKM749e8rtMCQy" target="_blank" rel="noopener" class="hotel-link">VER MAPA</a>
+      </div>
+      <div class="hotel-item">
+        <div class="hotel-info"><h5>Hotel Americano</h5></div>
+        <a href="https://share.google/PgtUHMgOEdkiehyN7" target="_blank" rel="noopener" class="hotel-link">VER MAPA</a>
       </div>
 
+      <h3 class="location-divider">SAN FRANCISCO</h3>
       <div class="hotel-item">
-        <div class="hotel-info">
-          <h5>Residencias del Valle</h5>
-          <p>A 10 minutos. Una opción moderna y funcional.</p>
-        </div>
-        <!-- REEMPLAZAR CON URL REAL -->
-        <a href="#" target="_blank" rel="noopener" class="hotel-link">VER WEB</a>
+        <div class="hotel-info"><h5>Howard Johnson Hotel</h5></div>
+        <a href="https://share.google/8xQ5EU7RHNR94Bi20" target="_blank" rel="noopener" class="hotel-link">VER WEB</a>
+      </div>
+      <div class="hotel-item">
+        <div class="hotel-info"><h5>Hotel Soho Suites</h5></div>
+        <a href="https://share.google/JIVAuQE0R19H21FZ7" target="_blank" rel="noopener" class="hotel-link">VER WEB</a>
+      </div>
+      <div class="hotel-item">
+        <div class="hotel-info"><h5>Hotel HD</h5></div>
+        <a href="https://share.google/92GRi4u80CyhoFu8e" target="_blank" rel="noopener" class="hotel-link">VER WEB</a>
+      </div>
+      <div class="hotel-item">
+        <div class="hotel-info"><h5>Inizio Hotel</h5></div>
+        <a href="https://share.google/RGyqQfcDA1meYfJvy" target="_blank" rel="noopener" class="hotel-link">VER WEB</a>
       </div>
     </div>
+
+    <hr class="modal-divider">
+
+    <h2>Transporte</h2>
+    <div class="hotel-list">
+      <h3 class="location-divider">ARROYITO</h3>
+      <div class="transport-item">
+        <p><strong>Remises Arroyito:</strong> <br> 3576-485018 / 452525</p>
+      </div>
+      <div class="transport-item">
+        <p><strong>Remiseria Santo Domingo:</strong> <br> WhatsApp: 3576-521326</p>
+      </div>
+
+      <h3 class="location-divider">SAN FRANCISCO</h3>
+      <div class="transport-item">
+        <p><strong>Remises Premium:</strong> <br> WhatsApp: 3564-388000</p>
+      </div>
+      <div class="transport-item">
+        <p><strong>Remises Los Más Rápidos:</strong> <br> 3564-422717 / 307673</p>
+      </div>
+      <div class="transport-item">
+        <p><strong>Remis José Luis Ferraris:</strong> <br> 3564-630505</p>
+      </div>
+    </div>
+
+    <p class="modal-footer-info">
+      Si te interesa sumarte a traslados grupales en buses o combis, consultanos.
+    </p>
   </div>
 </div>
 

@@ -852,7 +852,7 @@ footer a {
 }
 
 .title-hospedaje {
-  font-size: 20px;
+  font-size: 40px;
   letter-spacing: 3px;
   margin-bottom: 15px;
 }
@@ -865,7 +865,35 @@ footer a {
   margin-bottom: 25px;
   padding: 0 20px;
 }
+.location-divider {
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  color: #888;
+  margin: 25px 0 10px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
+  text-align: left;
+  width: 100%;
+}
 
+.modal-divider {
+  margin: 40px 0;
+  border: 0;
+  border-top: 1px solid #ddd;
+}
+
+.transport-item {
+  text-align: left;
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+.modal-footer-info {
+  margin-top: 30px;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: #666;
+}
 /* =========================================
    13. MODAL HOTELES
    ========================================= */
@@ -876,29 +904,41 @@ footer a {
   z-index: 9999;
   background: rgba(20, 18, 18, 0.28);
   backdrop-filter: blur(3px);
-  padding: 30px;
+  
+  /* HABILITA EL SCROLL AQUÍ */
+  overflow-y: auto; 
+  -webkit-overflow-scrolling: touch; 
+  padding: 20px; /* Un poco menos de padding para dar aire en móviles */
 }
 
 .modal-content {
   position: relative;
   max-width: 560px;
   width: 100%;
-  margin: 8vh auto;
+  margin: 20px auto; /* Reducimos el 8vh para que no se pierda contenido arriba */
   padding: 55px 50px;
   background: linear-gradient(rgba(252,250,247,0.96), rgba(252,250,247,0.96));
   border: 1px solid rgba(0,0,0,0.12);
   text-align: center;
   animation: atelierModal 0.45s ease;
-  overflow: hidden;
+  
+  /* CAMBIO CLAVE: Quitamos el hidden para que el contenido fluya */
+  overflow: visible; 
   box-sizing: border-box;
+  
+  /* Aseguramos un margen inferior para que no choque con el borde del navegador al final */
+  margin-bottom: 50px; 
 }
 
+/* El pseudo-elemento ::before se mantendrá fijo decorando el cuadro 
+   aunque el contenido adentro crezca, manteniendo el lujo silencioso */
 .modal-content::before {
   content: "";
   position: absolute;
   inset: 10px;
   border: 1px solid rgba(0,0,0,0.05);
   pointer-events: none;
+  z-index: 1; /* Para que no tape los links */
 }
 
 .modal-content h2 {

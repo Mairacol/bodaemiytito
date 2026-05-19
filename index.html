@@ -194,7 +194,8 @@
 
   </div>
 </section>
-  <section class="rsvp reveal">
+ <!-- Le sumamos el ID y lo ocultamos por defecto -->
+<section class="rsvp reveal" id="rsvpSection" style="display: none;">
   <div class="container">
     <div class="rsvp-inner">
 
@@ -211,8 +212,7 @@
       <div class="custom-select-wrapper main-selector">
         <div class="custom-select" id="peopleCountCustom" onclick="toggleSelect(this)">
           <span class="selected-option">Seleccionar cantidad...</span>
-          <div class="custom-options" id="peopleOptions">
-            </div>
+          <div class="custom-options" id="peopleOptions"></div>
         </div>
         <input type="hidden" id="peopleCount" value="">
       </div>
@@ -311,6 +311,33 @@
   </div>
 </div>
 
-<script src="script.js"></script>
+<script src="script.js">
+document.addEventListener("DOMContentLoaded", () => {
+  // 1. Obtenemos los parámetros de la URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const familia = urlParams.get('familia');
+  const slots = urlParams.get('slots');
+
+  const rsvpSection = document.getElementById('rsvpSection');
+  const familyNameInput = document.getElementById('familyName');
+  const slotsInput = document.getElementById('slots');
+
+  // 2. Validamos si AMBOS parámetros existen en la URL
+  if (familia && slots) {
+    // Si existen, mostramos la sección
+    rsvpSection.style.display = "block";
+    
+    // Aprovechamos para rellenar los datos de la tarjeta visual automáticamente
+    familyNameInput.textContent = decodeURIComponent(familia);
+    slotsInput.textContent = `Lugares disponibles: ${slots}`;
+    
+    // NOTA: Acá podés usar la variable 'slots' para limitar 
+    // las opciones de tu "peopleOptions" dinámicamente si lo necesitas.
+  } else {
+    // Si no existen, nos aseguramos de que permanezca oculto
+    rsvpSection.style.display = "none";
+    console.log("Acceso no válido: Faltan parámetros de invitación.");
+  }
+});</script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 // ⚠️ REEMPLAZAR con el ID real del Google Apps Script
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxfjJfjmlncwVz0DolE0MFiPxUL6gNhlQZ5ETXNZO1pFn24BsHUpRnffYsyKsVnbSl5kg/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwVfRzCLT80DuFsj12BS25jtEfveVoNNz5tFpKh65GHDu-a0SWrgb9Cx612WEOK-HBcyQ/exec";
 
 const params = new URLSearchParams(window.location.search);
 const family = params.get('familia') || '';

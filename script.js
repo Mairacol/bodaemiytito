@@ -72,7 +72,7 @@ function generarCamposInvitados(cantidad) {
             </div>
 
             <label class="mini-label">Preferencia de menú</label>
-            <div class="custom-select-wrapper">
+            <div class="custom-select-wrapper" style="margin-bottom: 25px;">
                 <div class="custom-select" onclick="toggleSelect(this)">
                     <span class="selected-option">Menú estándar</span>
                     <div class="custom-options">
@@ -361,3 +361,48 @@ window.onclick = function(e) {
     }
 }
 
+/* ==========================================================================
+   VALIDACIÓN DE INVITACIÓN POR URL (Pegar al final del archivo script.js)
+   ========================================================================== */
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. Capturamos los datos que vienen en el enlace
+    const urlParams = new URLSearchParams(window.location.search);
+    const familia = urlParams.get('familia');
+    const slots = parseInt(urlParams.get('slots'), 10); // Lo convertimos a número entero
+
+    // 2. Traemos los elementos del HTML
+    const rsvpSection = document.getElementById('rsvpSection');
+    const familyNameInput = document.getElementById('familyName');
+    const slotsInput = document.getElementById('slots');
+    const peopleOptions = document.getElementById('peopleOptions'); 
+
+    // 3. Validamos si la URL es correcta
+    if (familia && slots && slots > 0) {
+        // Mostramos el bloque RSVP completo
+        if (rsvpSection) rsvpSection.style.display = "block";
+        
+        // Inyectamos el apellido y la cantidad en la tarjeta de arriba
+        if (familyNameInput) familyNameInput.textContent = decodeURIComponent(familia);
+        if (slotsInput) slotsInput.textContent = `Hay ${slots} lugares reservados`;
+
+        // 4. OPCIONAL / RECOMENDADO: Limitar las opciones del selector según los slots
+        // Si tenías una función que armaba el desplegable de "Número de personas",
+        // podés generar las opciones dinámicamente acá para que no elijan de más.
+        if (peopleOptions) {
+            peopleOptions.innerHTML = ''; // Limpiamos opciones fijas viejas
+            for (let i = 1; i <= slots; i++) {
+                const opt = document.createElement('div');
+                opt.classList.add('option');
+                // Al hacer clic, esta función nativa tuya se encarga de cambiar el número
+                opt.setAttribute('onclick', `selectOption(this, '${i}')`);
+                opt.textContent = `${i} ${i === 1 ? 'persona' : 'personas'}`;
+                peopleOptions.appendChild(opt);
+            }
+        }
+
+    } else {
+        // Si entran directo sin URL válida, se oculta todo el formulario
+        if (rsvpSection) rsvpSection.style.display = "none";
+        console.log("Acceso no válido: Faltan parámetros en la URL o los slots son 0.");
+    }
+});

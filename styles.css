@@ -601,11 +601,16 @@ body::before {
   margin-bottom: 30px;
 }
 
-.guest {
-  background: #ece7df;
-  padding: 25px;
-  border-radius: 14px;
-  margin: 30px 0;
+/* Estilo canchero y en negrita para las etiquetas dentro de cada invitado */
+.guest .mini-label {
+  font-family: 'Courier Prime', monospace; /* O la tipografía que estés usando en tu diseño */
+  font-weight: bold;
+  font-size: 14px;
+  display: block;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  color: #111; /* Mismo color oscuro que el h4 */
 }
 
 .guest h4 {

@@ -255,33 +255,39 @@ document.getElementById('submitBtn').addEventListener('click', async () => {
     });
   });
 
-  try {
-    const response = await fetch(SCRIPT_URL, {
-      method: "POST",
-      body: JSON.stringify({ familia: family, guests: guests })
-    });
+ try {
 
-    if (!response.ok) {
-      throw new Error(`Error del servidor: ${response.status}`);
-    }
+  await fetch(SCRIPT_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      familia: family,
+      guests: guests
+    })
+  });
 
-    // Éxito: mostrar mensaje de gracias
-    submitBtn.style.display = 'none';
-    document.getElementById('thanks').classList.remove('hidden');
+  submitBtn.style.display = 'none';
+  document.getElementById('thanks').classList.remove('hidden');
 
-    // Limpiar el formulario sin regenerarlo (no llamar dispatchEvent aquí)
-    guestsDiv.innerHTML = '';
-    peopleSelect.value = '1';
+  guestsDiv.innerHTML = '';
 
-  } catch (error) {
-    console.error('Error al enviar el formulario:', error);
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Confirmar';
-    errorMsg.classList.remove('hidden');
-    errorMsg.textContent = 'Hubo un problema al enviar. Por favor intentá de nuevo.';
-  }
+  hiddenPeopleInput.value = '';
+  selectedDisplay.innerText = 'Seleccionar cantidad...';
+
+} catch (error) {
+
+  console.error(error);
+
+  submitBtn.disabled = false;
+  submitBtn.textContent = 'Confirmar';
+
+  errorMsg.classList.remove('hidden');
+  errorMsg.textContent = 'Hubo un problema al enviar.';
+}
 });
-
 /* =========================================
    INTERSECTION OBSERVER (REVEAL)
    ========================================= */

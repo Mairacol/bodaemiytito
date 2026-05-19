@@ -601,16 +601,116 @@ body::before {
   margin-bottom: 30px;
 }
 
-/* Estilo canchero y en negrita para las etiquetas dentro de cada invitado */
-.guest .mini-label {
-  font-family: 'Courier Prime', monospace; /* O la tipografía que estés usando en tu diseño */
-  font-weight: bold;
+/* ==========================================================================
+   ALINEACIÓN ASIMÉTRICA COMPLETA CON SENTIDO DE AUTOR
+   ========================================================================== */
+
+/* 1. "Número de personas" con negrita, centrado y su bloque rojo a la izquierda */
+.main-title-label {
+  font-family: 'Courier Prime', monospace;
+  font-weight: bold !important;
   font-size: 14px;
+  color: #111;
   display: block;
-  text-align: center;
-  margin-top: 15px;
-  margin-bottom: 10px;
-  color: #111; /* Mismo color oscuro que el h4 */
+  text-align: center; /* Texto en el centro */
+  margin-top: 35px;
+  margin-bottom: 20px;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Forzamos el bloque rojo a la izquierda en el título principal */
+.main-title-label::before {
+  content: "";
+  width: 3px;
+  height: 14px;
+  background: #c4002f;
+  position: absolute;
+  left: 0; /* Clavado a la izquierda */
+  top: 3px;
+}
+
+/* 2. Etiquetas dinámicas de los invitados (¿Asiste? / Preferencia de menú) */
+.guest .mini-label {
+  font-family: 'Courier Prime', monospace;
+  font-weight: bold !important;
+  font-size: 14px;
+  color: #111;
+  display: block;
+  text-align: center; /* Texto centrado */
+  margin-top: 40px; 
+  margin-bottom: 15px;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 0 !important; /* Limpiamos residuos para centrar perfecto */
+}
+
+/* Bloquecito rojo fijo a la izquierda para los datos del invitado */
+.guest .mini-label::before {
+  content: "";
+  width: 3px;
+  height: 14px;
+  background: #c4002f;
+  position: absolute;
+  left: 0; /* Sigue la misma línea que el de arriba */
+  top: 3px;
+}
+
+/* 3. Botones Sí y No perfectamente centrados */
+.radio-group {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 20px 0 30px 0;
+}
+
+.radio-group label {
+  font-family: 'Courier Prime', monospace;
+  font-size: 14px;
+  color: #111;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+/* Estilo premium para el check circular */
+.radio-group input[type="radio"] {
+  accent-color: #c4002f;
+  transform: scale(1.15);
+  cursor: pointer;
+  margin: 0;
+}
+
+/* 4. Textarea de líneas abiertas con aire corregido */
+textarea.mensaje {
+  border: none !important;
+  border-bottom: 1px solid #aaa !important;
+  border-radius: 0 !important;
+  padding: 10px 0 12px 0 !important; /* Despega el texto de la línea guía */
+  margin-top: 25px;
+  background: transparent !important;
+  resize: none !important;
+  height: 65px !important;
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.95rem;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+}
+
+textarea.mensaje:focus {
+  outline: none;
+  border-color: #c4002f !important;
+}
+
+/* 5. Cierre con tipografía tipográfica y espaciado de imprenta */
+button#submitBtn {
+  font-family: 'Courier Prime', monospace;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin-top: 55px;
 }
 
 .guest h4 {

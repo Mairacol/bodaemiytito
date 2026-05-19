@@ -1056,7 +1056,7 @@ footer a {
 .hospedaje-img-wrapper { margin-bottom: 30px; }
 
 .hospedaje-img {
-  width: 100%;
+  width: 50%;
   max-width: 450px;
   height: auto;
 }
@@ -1304,6 +1304,55 @@ footer a {
         transform: translateY(0);
     }
 }
+/* ==========================================================================
+   ILUSTRACIÓN DE AGRADECIMIENTO (SENTIDO DE AUTOR)
+   ========================================================================== */
+.thanks {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/* Un "Gracias" sutil, con personalidad y más aire */
+.thanks h2.thanks-title {
+  font-family: 'Old Bridges', cursive; /* O tu tipografía de autor manuscrita/serif */
+  font-size: 2.8rem;
+  color: #c4002f; /* El rojo de tu trazo para unificar */
+  margin-bottom: 12px;
+  font-weight: normal;
+}
+
+.thanks p.thanks-subtitle {
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.95rem;
+  letter-spacing: 2px; /* Espaciado de letras premium */
+  color: rgba(0,0,0,0.6);
+  margin-bottom: 45px; /* Más despegado de la ilustración para que respire */
+}
+
+.thanks-illustration {
+  max-width: 280px; /* Tamaño boutique controlado para que no sature */
+  width: 100%;
+  height: auto;
+  margin-top: 35px; /* "Breathing room" para despegarla del texto */
+  mix-blend-mode: multiply; /* Si tu imagen tiene fondo blanco puro, esto hace que se fusione perfectamente con tu fondo texturizado */
+  opacity: 0;
+  transform: translateY(10px);
+  animation: sutilAparicion 0.8s ease forwards 0.2s; /* Aparece con un sutil desplazamiento hacia arriba */
+}
+
+/* Animación fluida para la aparición de la pieza */
+@keyframes sutilAparicion {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Ocultar la pantalla de agradecimiento por defecto en el arranque */
+#thanks.hidden {
+  display: none !important;
+}
+
 /* =========================================
    14. RESPONSIVE
    ========================================= */

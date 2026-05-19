@@ -11,42 +11,47 @@ const guestsDiv = document.getElementById('guests');
 
 // Elementos del selector lindo
 const peopleOptions = document.getElementById('peopleOptions');
-const hiddenPeopleInput = document.getElementById('peopleCount'); // Este es tu nuevo peopleSelect
+const hiddenPeopleInput = document.getElementById('peopleCount'); 
 const selectedDisplay = document.querySelector('#peopleCountCustom .selected-option');
+const submitBtn = document.getElementById('submitBtn');
 
-familyName.innerText = `Familia ${family}`;
-slotsText.innerText = `Hay ${slots} lugares reservados`;
+if (familyName) familyName.innerText = `Familia ${family}`;
+if (slotsText) slotsText.innerText = `Hay ${slots} lugares reservados`;
 
 /* =========================================
    1. POBLAR SELECTOR PRINCIPAL (CANTIDAD)
    ========================================= */
-for (let i = 1; i <= slots; i++) {
-    const divOption = document.createElement('div');
-    divOption.classList.add('option');
-    divOption.innerText = i + (i === 1 ? ' persona' : ' personas');
-    
-    divOption.onclick = function(e) {
-        e.stopPropagation();
+if (peopleOptions) {
+    for (let i = 1; i <= slots; i++) {
+        const divOption = document.createElement('div');
+        divOption.classList.add('option');
+        divOption.innerText = i + (i === 1 ? ' persona' : ' personas');
         
-        // Actualizar visual y valor oculto
-        selectedDisplay.innerText = this.innerText;
-        hiddenPeopleInput.value = i;
+        divOption.onclick = function(e) {
+            e.stopPropagation();
+            
+            // Actualizar visual y valor oculto
+            if (selectedDisplay) selectedDisplay.innerText = this.innerText;
+            if (hiddenPeopleInput) hiddenPeopleInput.value = i;
+            
+            // Cerrar menú
+            this.closest('.custom-select').classList.remove('open');
+            
+            // Disparar la generación de campos de invitados
+            generarCamposInvitados(i);
+        };
         
-        // Cerrar menú
-        this.closest('.custom-select').classList.remove('open');
-        
-        // AQUÍ DISPARAMOS LA GENERACIÓN: ahora sí aparecerán los campos
-        generarCamposInvitados(i);
-    };
-    
-    peopleOptions.appendChild(divOption);
+        peopleOptions.appendChild(divOption);
+    }
 }
 
 /* =========================================
    2. GENERAR CAMPOS DE INVITADOS
    ========================================= */
 function generarCamposInvitados(cantidad) {
-    // Si la cantidad es 0 o no hay selección, no hacemos nada
+    if (!guestsDiv) return;
+    
+    // Si la cantidad es 0 o no hay selección, vaciamos y salimos
     if (!cantidad || cantidad < 1) {
         guestsDiv.innerHTML = '';
         return;
@@ -57,7 +62,6 @@ function generarCamposInvitados(cantidad) {
     for (let i = 1; i <= cantidad; i++) {
         const div = document.createElement('div');
         div.classList.add('guest');
-        // Agregamos una clase de animación para que aparezcan suavemente
         div.classList.add('reveal', 'active'); 
 
         div.innerHTML = `
@@ -91,8 +95,6 @@ function generarCamposInvitados(cantidad) {
     }
 }
 
-// IMPORTANTE: Borra la línea que decía generarCamposInvitados(1);
-// Al no llamarla aquí, el div #guests empezará vacío.
 /* =========================================
    3. FUNCIONES DE CONTROL (SELECTS LINDOS)
    ========================================= */
@@ -108,8 +110,8 @@ function selectOption(element, value) {
     const display = wrapper.querySelector('.selected-option');
     const hiddenInput = wrapper.querySelector('.comida');
     
-    display.innerText = element.innerText;
-    hiddenInput.value = value;
+    if (display) display.innerText = element.innerText;
+    if (hiddenInput) hiddenInput.value = value;
     
     element.closest('.custom-select').classList.remove('open');
     if (window.event) window.event.stopPropagation();
@@ -121,84 +123,78 @@ window.addEventListener('click', function(e) {
         document.querySelectorAll('.custom-select').forEach(s => s.classList.remove('open'));
     }
 });
-// ... (Aquí sigue tu código de Música, Intro, Validación y Confirmación)
+
 /* =========================================
-   LÓGICA DE MÚSICA (VERSIÓN FINAL SÓLIDA)
+   4. LÓGICA DE MÚSICA
    ========================================= */
 const music = document.getElementById('music');
-const btn = document.getElementById('musicBtn');
+const musicBtn = document.getElementById('musicBtn');
 const svgPath = document.getElementById('svgPath');
 
-// Función para cambiar el icono
 const actualizarIcono = () => {
+  if (!music || !svgPath) return;
   if (music.paused) {
-    svgPath.setAttribute('d', 'M8 5v14l11-7z'); // Play
+    svgPath.setAttribute('d', 'M8 5v14l11-7z'); // Icono Play
   } else {
-    svgPath.setAttribute('d', 'M6 19h4V5H6v14zm8-14v14h4V5h-4z'); // Pausa
+    svgPath.setAttribute('d', 'M6 19h4V5H6v14zm8-14v14h4V5h-4z'); // Icono Pausa
   }
 };
 
-// Función para arrancar la música al primer toque
 const arrancarMusica = () => {
+  if (!music) return;
   music.play().then(() => {
     actualizarIcono();
-    // Una vez que arrancó, dejamos de escuchar toques globales
     document.removeEventListener('click', arrancarMusica);
     document.removeEventListener('touchstart', arrancarMusica);
-  }).catch(err => console.log("Esperando interacción..."));
+  }).catch(err => console.log("Esperando interacción del usuario..."));
 };
 
-// Escuchamos el primer toque en CUALQUIER LADO de la pantalla
 document.addEventListener('click', arrancarMusica);
 document.addEventListener('touchstart', arrancarMusica);
 
-// Control manual del botón circular
-btn.addEventListener('click', (e) => {
-  e.stopPropagation(); // IMPORTANTE: evita que el clic "suba" al document
-  if (music.paused) {
-    music.play().then(actualizarIcono);
-  } else {
-    music.pause();
-    actualizarIcono();
-  }
-});
+if (musicBtn) {
+  musicBtn.addEventListener('click', (e) => {
+    e.stopPropagation(); 
+    if (!music) return;
+    if (music.paused) {
+      music.play().then(actualizarIcono);
+    } else {
+      music.pause();
+      actualizarIcono();
+    }
+  });
+}
 
-// Sincronizar por si pasa algo externo
-music.onplay = actualizarIcono;
-music.onpause = actualizarIcono;
+if (music) {
+  music.onplay = actualizarIcono;
+  music.onpause = actualizarIcono;
+}
+
 /* =========================================
-   INTRO SOBRE
+   5. INTRO SOBRE
    ========================================= */
 window.addEventListener('load', () => {
   const intro = document.getElementById('intro-overlay');
-  
-  // Suponiendo que tu sello tiene la clase 'sello' o 'wax-seal'
-  // Si no tienes un ID específico, puedes usar el contenedor 'intro' directamente
-  intro.addEventListener('click', () => {
-    
-    // 1. Iniciamos la animación de apertura del sobre
-    intro.classList.add('is-open');
-
-    // 2. Esperamos un poco a que termine la animación visual 
-    // antes de desvanecer todo el overlay
-    setTimeout(() => {
-      intro.classList.add('fade-out');
-      document.body.style.overflow = 'auto'; // Habilitar scroll
-      
-      // Opcional: Eliminar el elemento del DOM después de que desaparezca
+  if (intro) {
+    intro.addEventListener('click', () => {
+      intro.classList.add('is-open');
       setTimeout(() => {
-        intro.style.display = 'none';
-      }, 1000);
-    }, 2000); // Ajusta este tiempo según lo que dure tu animación de apertura
-  });
+        intro.classList.add('fade-out');
+        document.body.style.overflow = 'auto'; 
+        setTimeout(() => {
+          intro.style.display = 'none';
+        }, 1000);
+      }, 2000); 
+    });
+  }
 });
+
 /* =========================================
-   VALIDACIÓN DEL FORMULARIO
+   6. VALIDACIÓN DEL FORMULARIO
    ========================================= */
 function validarFormulario() {
   let valido = true;
 
-  // Limpiar errores previos
   document.querySelectorAll('.field-error').forEach(el => el.classList.remove('field-error'));
 
   document.querySelectorAll('.guest').forEach((g, i) => {
@@ -206,12 +202,12 @@ function validarFormulario() {
     const apellido = g.querySelector('.apellido');
     const asistenteChecked = g.querySelector(`input[name="asiste${i+1}"]:checked`);
 
-    if (!nombre.value.trim()) {
+    if (nombre && !nombre.value.trim()) {
       nombre.classList.add('field-error');
       valido = false;
     }
 
-    if (!apellido.value.trim()) {
+    if (apellido && !apellido.value.trim()) {
       apellido.classList.add('field-error');
       valido = false;
     }
@@ -225,105 +221,136 @@ function validarFormulario() {
 }
 
 /* =========================================
-   SUBMIT CON VALIDACIÓN Y MANEJO DE ERRORES
+   7. SUBMIT CON COBERTURA TOTAL DE LIMPIEZA
    ========================================= */
-document.getElementById('submitBtn').addEventListener('click', async () => {
-  const errorMsg = document.getElementById('formError');
+if (submitBtn) {
+  submitBtn.addEventListener('click', async () => {
+    const errorMsg = document.getElementById('formError');
 
-  // Validar antes de enviar
-  if (!validarFormulario()) {
-    errorMsg.classList.remove('hidden');
-    errorMsg.textContent = 'Por favor completá todos los campos obligatorios y seleccioná si asiste cada persona.';
-    return;
-  }
+    if (!validarFormulario()) {
+      if (errorMsg) {
+        errorMsg.classList.remove('hidden');
+        errorMsg.style.display = 'block';
+        errorMsg.textContent = 'Por favor completá todos los campos obligatorios y seleccioná si asiste cada persona.';
+      }
+      return;
+    }
 
-  errorMsg.classList.add('hidden');
+    if (errorMsg) {
+      errorMsg.classList.add('hidden');
+      errorMsg.style.display = 'none';
+    }
 
-  const submitBtn = document.getElementById('submitBtn');
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Enviando...';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
 
-  const guests = [];
-
-  document.querySelectorAll('.guest').forEach((g, i) => {
-    guests.push({
-      nombre:   g.querySelector('.nombre').value.trim(),
-      apellido: g.querySelector('.apellido').value.trim(),
-      asiste:   g.querySelector(`input[name="asiste${i+1}"]:checked`)?.value || '',
-      comida:   g.querySelector('.comida').value,
-      mensaje:  g.querySelector('.mensaje').value.trim()
+    const guests = [];
+    document.querySelectorAll('.guest').forEach((g, i) => {
+      guests.push({
+        nombre:   g.querySelector('.nombre').value.trim(),
+        apellido: g.querySelector('.apellido').value.trim(),
+        asiste:   g.querySelector(`input[name="asiste${i+1}"]:checked`)?.value || '',
+        comida:   g.querySelector('.comida').value,
+        mensaje:  g.querySelector('.mensaje').value.trim()
+      });
     });
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ familia: family, guests: guests })
+      });
+
+      // --------------------------------------------------------------------
+      // ¡APAGÓN TOTAL DEL FORMULARIO DE CARGA VIEJO!
+      // --------------------------------------------------------------------
+      submitBtn.style.display = 'none';
+      if (familyName) familyName.style.display = 'none';
+      if (slotsText) slotsText.style.display = 'none';
+      
+      const cardContainer = document.querySelector('.rsvp .card');
+      const rsvpTitle = document.querySelector('.rsvp .title') || document.querySelector('.title');
+      const rsvpLimit = document.querySelector('.rsvp .limit') || document.querySelector('.limit');
+      const mainLabel = document.querySelector('.main-title-label') || document.querySelector('.mini-label');
+      const mainSelector = document.querySelector('.main-selector');
+
+      if (cardContainer) cardContainer.style.display = 'none';
+      if (rsvpTitle) rsvpTitle.style.display = 'none';
+      if (rsvpLimit) rsvpLimit.style.display = 'none';
+      if (mainLabel) mainLabel.style.display = 'none';
+      if (mainSelector) mainSelector.style.display = 'none';
+
+      // Vaciamos y dormimos las tarjetas dinámicas de invitados
+      if (guestsDiv) {
+        guestsDiv.innerHTML = '';
+        guestsDiv.style.display = 'none';
+      }
+
+      // REVELAMOS LA PANTALLA DE AGRADECIMIENTO EDITORIAL
+      const thanksDiv = document.getElementById('thanks');
+      if (thanksDiv) {
+          thanksDiv.classList.remove('hidden');
+          thanksDiv.style.display = 'flex'; 
+          thanksDiv.style.flexDirection = 'column';
+          thanksDiv.style.alignItems = 'center';
+          thanksDiv.style.justifyContent = 'center';
+          thanksDiv.style.minHeight = '420px'; 
+      }
+
+      // Estados de reseteo lógico por seguridad
+      if (hiddenPeopleInput) hiddenPeopleInput.value = '';
+      if (selectedDisplay) selectedDisplay.innerText = 'Seleccionar cantidad...';
+
+    } catch (error) {
+      console.error(error);
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Confirmar';
+      
+      if (errorMsg) {
+        errorMsg.classList.remove('hidden');
+        errorMsg.style.display = 'block';
+        errorMsg.textContent = 'Hubo un problema al enviar.';
+      }
+    }
   });
-
- try {
-
-  await fetch(SCRIPT_URL, {
-    method: "POST",
-    mode: "no-cors",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      familia: family,
-      guests: guests
-    })
-  });
-
-  submitBtn.style.display = 'none';
-  document.getElementById('thanks').classList.remove('hidden');
-
-  guestsDiv.innerHTML = '';
-
-  hiddenPeopleInput.value = '';
-  selectedDisplay.innerText = 'Seleccionar cantidad...';
-
-} catch (error) {
-
-  console.error(error);
-
-  submitBtn.disabled = false;
-  submitBtn.textContent = 'Confirmar';
-
-  errorMsg.classList.remove('hidden');
-  errorMsg.textContent = 'Hubo un problema al enviar.';
 }
-});
+
 /* =========================================
-   INTERSECTION OBSERVER (REVEAL)
+   8. INTERSECTION OBSERVER (REVEAL)
    ========================================= */
 const revealOptions = {
-  threshold: 0.1, // Se activa cuando asoma el 10%
-  rootMargin: "0px 0px -50px 0px" // Evita que se dispare muy al borde del scroll
+  threshold: 0.1, 
+  rootMargin: "0px 0px -50px 0px" 
 };
 
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
-      // Usamos requestAnimationFrame para que la animación entre 
-      // en el siguiente ciclo de dibujo del navegador y no se trabe
       requestAnimationFrame(() => {
         entry.target.classList.add('active');
       });
-      // Dejamos de observar para que no se repita y no consuma recursos
       revealObserver.unobserve(entry.target);
     }
   });
 }, revealOptions);
 
-// Aplicar a todos los elementos con la clase reveal
 document.querySelectorAll('.reveal').forEach((el) => {
   revealObserver.observe(el);
 });
 
 /* =========================================
-   MODAL HOTELES
+   9. MODAL HOTELES
    ========================================= */
 function openModal() {
-  document.getElementById("hotelModal").style.display = "block";
+  const modal = document.getElementById("hotelModal");
+  if (modal) modal.style.display = "block";
 }
 
 function closeModal() {
-  document.getElementById("hotelModal").style.display = "none";
+  const modal = document.getElementById("hotelModal");
+  if (modal) modal.style.display = "none";
 }
 
 window.addEventListener('click', function(event) {
@@ -333,49 +360,33 @@ window.addEventListener('click', function(event) {
   }
 });
 
-// Cerrar modal con tecla Escape
 window.addEventListener('keydown', function(event) {
   if (event.key === 'Escape') {
     closeModal();
   }
 });
-function toggleSelect(element) {
-    document.querySelectorAll('.custom-select').forEach(s => {
-        if (s !== element) s.classList.remove('open');
-    });
-    element.classList.toggle('open');
-}
-
-function selectOption(element, value) {
-    const wrapper = element.closest('.custom-select-wrapper');
-    wrapper.querySelector('.selected-option').innerText = element.innerText;
-    wrapper.querySelector('.comida').value = value;
-    element.closest('.custom-select').classList.remove('open');
-    if (window.event) window.event.stopPropagation();
-}
-
-// Cerrar si clickean fuera
-window.onclick = function(e) {
-    if (!e.target.closest('.custom-select')) {
-        document.querySelectorAll('.custom-select').forEach(s => s.classList.remove('open'));
-    }
-}
 
 /* ==========================================================================
-   CONTROL DE VISIBILIDAD RSVP (Pegar al final del archivo script.js)
+   10. CONTROL DE VISIBILIDAD RSVP INICIAL (DOMContentLoaded)
    ========================================================================== */
 document.addEventListener("DOMContentLoaded", () => {
-    const params = new URLSearchParams(window.location.search);
-    const familia = params.get('familia');
-    const slots = params.get('slots');
+    const paramsUrl = new URLSearchParams(window.location.search);
+    const familiaUrl = paramsUrl.get('familia');
+    const slotsUrl = paramsUrl.get('slots');
     
     const rsvpSection = document.getElementById('rsvpSection');
+    const thanksDiv = document.getElementById('thanks');
 
-    // Si la URL tiene los parámetros, simplemente hacemos visible la sección
-    if (familia && slots) {
+    // 1. Nos aseguramos de entrada que el thanks arranque invisible
+    if (thanksDiv) {
+        thanksDiv.style.display = 'none';
+        thanksDiv.classList.add('hidden');
+    }
+
+    // 2. Si la URL tiene los parámetros, hacemos visible la sección del formulario
+    if (familiaUrl && slotsUrl) {
         if (rsvpSection) rsvpSection.style.display = "block";
     } else {
-        // Si no es válida, nos aseguramos de que no se vea
         if (rsvpSection) rsvpSection.style.display = "none";
         console.log("Acceso no válido: Falta familia o slots en la URL.");
     }

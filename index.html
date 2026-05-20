@@ -6,17 +6,20 @@
   <meta name="format-detection" content="date=no, telephone=no, address=no">
   <title>Emi & Tito</title>
 
+  <!-- Optimización de carga de Fuentes Externas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
 </head>
 <body>
 
-
 <!-- INTRO OVERLAY -->
 <div id="intro-overlay" class="intro-overlay">
-
-<div class="symbol-trail">
+  <div class="symbol-trail">
+    <!-- Optimización: Carga prioritaria controlada -->
     <img src="images/fondo-huellas.png" class="unified-trail" alt="Huellas decorativas">
   </div>
 
@@ -25,30 +28,32 @@
       <img src="images/restodesobre.png" class="envelope-back" alt="Sobre">
       <div class="wax-seal">
         <img src="images/seal-corazon.png" class="seal-img" alt="Sello Emi y Tito">
-      <p class="click-hint">Toca el sello para abrir</p>
+        <p class="click-hint">Toca el sello para abrir</p>
       </div>
       <img src="images/flapp.png" class="envelope-flap" alt="Solapa">
     </div>
   </div>
-
 </div>
 
 <main class="main-content">
 
-  <!-- MÚSICA -->
-  <audio id="music" loop>
+  <!-- MÚSICA (preload="none" evita que se descargue sola al inicio) -->
+  <audio id="music" loop preload="none">
     <source src="images/AUD-20260427-WA0196.mp3" type="audio/mpeg">
   </audio>
-<button id="musicBtn" class="music-btn" aria-label="Reproducir música">
-  <div id="iconContainer">
-    <svg id="svgIcon" viewBox="0 0 24 24" width="20" height="20">
-      <path id="svgPath" d="M8 5v14l11-7z" fill="white"></path>
-    </svg>
-  </div>
-</button>
+
+  <button id="musicBtn" class="music-btn" aria-label="Reproducir música">
+    <div id="iconContainer">
+      <svg id="svgIcon" viewBox="0 0 24 24" width="20" height="20">
+        <path id="svgPath" d="M8 5v14l11-7z" fill="white"></path>
+      </svg>
+    </div>
+  </button>
+
   <!-- HERO -->
   <section class="hero">
-    <video autoplay muted loop playsinline class="video-full-view">
+    <!-- Optimización: video con preload metadata para no congelar el hilo principal -->
+    <video autoplay muted loop playsinline preload="metadata" class="video-full-view">
       <source src="images/galopacaballo.mp4" type="video/mp4">
     </video>
     <div class="hero-content">
@@ -66,7 +71,7 @@
   <section class="quote reveal">
     <p>Que todas las noches sean noches de boda,<br>que todas las lunas sean lunas de miel</p>
     <div class="logo">
-      <img src="images/logo_pareja-19-removebg-preview.png" alt="Logo Emi y Tito" class="logo-img">
+      <img src="images/logo_pareja-19-removebg-preview.png" alt="Logo Emi y Tito" class="logo-img" loading="lazy">
     </div>
   </section>
 
@@ -74,15 +79,12 @@
   <section class="timeline reveal">
     <div class="container">
       <h2 class="section-title-fecha">24 10 2026</h2>
-
       <div class="map-wrapper">
         <div class="map-content">
-          <img src="images/Plano.png" class="map-illustration" alt="Plano del evento">
-
+          <img src="images/Plano.png" class="map-illustration" alt="Plano del evento" loading="lazy">
           <div class="map-pin pin-ceremonia">
             <a href="https://maps.app.goo.gl/9szE1gFhSkMUk9iR9" target="_blank" rel="noopener" class="pin-btn">VER MAPA</a>
           </div>
-
           <div class="map-pin pin-fiesta">
             <a href="https://maps.app.goo.gl/rDCcRuCKLiTPMtSe9" target="_blank" rel="noopener" class="pin-btn">VER MAPA</a>
           </div>
@@ -94,13 +96,10 @@
   <!-- MÁS INFO -->
   <section class="info reveal">
     <div class="container">
-      <h2 class="section-title"></h2>
-
       <div class="info-grid">
-
          <div class="info-card info-card-hero">
           <div class="card-illustration-container">
-            <img src="images/titosinnariz.png" alt="Dress Code" class="card-illustration">
+            <img src="images/titosinnariz.png" alt="Dress Code" class="card-illustration" loading="lazy">
           </div>
           <h4>Dress Code</h4>
           <p>Al principio, elegantes.<br>Al final… lo deciden ustedes</p>
@@ -108,7 +107,7 @@
 
         <div class="info-card info-card-hero">
           <div class="card-illustration-container">
-            <img src="images/emidamasdehonor.png" alt="Damas de honor" class="card-illustration">
+            <img src="images/emidamasdehonor.png" alt="Damas de honor" class="card-illustration" loading="lazy">
           </div>
           <h4>Damas de honor</h4>
           <p>En tonos chocolates y pistacho</p>
@@ -116,127 +115,104 @@
 
         <div class="info-card info-card-hero">
           <div class="card-illustration-container">
-            <img src="images/brindis (2).png" alt="Celebración de adultos" class="card-illustration">
+            <img src="images/brindis (2).png" alt="Celebración de adultos" class="card-illustration" loading="lazy">
           </div>
           <h4>Celebración de adultos</h4>
           <p>Para que todos puedan disfrutar al máximo, hemos decidido que nuestra boda sea una noche solo para mayores.</p>
         </div>
-
-     
-
-      </div><!-- /info-grid -->
+      </div>
     </div>
   </section>
 
-  
-
   <!-- HOTELES -->
   <section class="hospedaje-final reveal">
-  <div class="container container-hospedaje">
-
-    <div class="hospedaje-img-wrapper">
-      <img src="images/perritaroja.png" alt="Alojamiento y Transporte" class="hospedaje-img">
+    <div class="container container-hospedaje">
+      <div class="hospedaje-img-wrapper">
+        <img src="images/perritaroja.png" alt="Alojamiento y Transporte" class="hospedaje-img" loading="lazy">
+      </div>
+      <h2 class="section-title title-hospedaje">Estadía</h2>
+      <p class="hospedaje-description">
+        En caso de necesitar alojamiento o transporte, les recomendamos realizar las reservas con anticipación.
+      </p>
+      <button onclick="openModal()" class="playlist-btn btn-hotels">VER OPCIONES</button>
     </div>
+  </section>
 
-    <h2 class="section-title title-hospedaje">Estadía</h2>
-
-    <p class="hospedaje-description">
-      En caso de necesitar alojamiento o transporte, les recomendamos realizar las reservas con anticipación.
-    </p>
-
-    <button onclick="openModal()" class="playlist-btn btn-hotels">
-      VER OPCIONES
-    </button>
-
-  </div>
-</section>
-
-
-<!-- PLAYLIST -->
+  <!-- PLAYLIST -->
   <section class="playlist reveal">
     <div class="playlist-inner">
       <h2 class="playlist-title">Nuestra Playlist</h2>
       <p class="playlist-sub">Sumá canciones que no pueden faltar en la fiesta</p>
 
       <div class="spotify-embed">
-        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/7q3eiu0HD5HQsoukMUynew?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
-
+        <!-- El src real se inyectará dinámicamente mediante JS cuando el usuario llegue aquí para que no trabe la web -->
+        <iframe id="spotify-iframe" data-src="https://open.spotify.com/embed/playlist/7q3eiu0HD5HQsoukMUynew?utm_source=generator" style="border-radius:12px" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
         </iframe>
       </div>
 
-      <a href="https://open.spotify.com/playlist/7q3eiu0HD5HQsoukMUynew?si=d-K_RfEmT5mMvZGj8tqlRQ&pi=1mZ6VQ9ITnWjV&pt=ed98042170cd0e278a5f20d0b202b1fc"
-         target="_blank" rel="noopener" class="playlist-btn">
+      <a href="https://open.spotify.com/playlist/7q3eiu0HD5HQsoukMUynew?si=d-K_RfEmT5mMvZGj8tqlRQ&pi=1mZ6VQ9ITnWjV&pt=ed98042170cd0e278a5f20d0b202b1fc" target="_blank" rel="noopener" class="playlist-btn">
         Agregar canción
       </a>
     </div>
   </section>
 
+  <!-- INSTAGRAM -->
   <section class="instagram-minimal reveal">
-  <div class="container">
-    
-    <div class="insta-profile-header">
-      <div class="profile-circle">
-        <img src="images/logo_pareja-19-removebg-preview.png" alt="E&T">
-      </div>
-      <div class="profile-info">
-        <h3>@emiytito.nochedeboda</h3>
-        <p>Nuestra historia en fotos</p>
-      </div>
-    </div>
-
-    <div class="insta-action">
-      
-      <a href="https://www.instagram.com/emiytito.nochedeboda?igsh=NWgxbXJoMmh1YzVi&utm_source=qr" target="_blank" class="btn-chusmear">
-        ENTRAR A INSTAGRAM
-      </a>
-    </div>
-
-  </div>
-</section>
- <!-- Le sumamos el ID y lo ocultamos por defecto -->
-<section class="rsvp reveal" id="rsvpSection" style="display: none;">
-  <div class="container">
-    <div class="rsvp-inner">
-
-      <div class="card">
-        <span class="guest-label">Invitados</span>
-        <h3 id="familyName"></h3>
-        <p id="slots"></p>
-      </div>
-
-      <h2 class="title">Confirmá tu asistencia</h2>
-      <p class="limit">Antes del 24 de Septiembre 2026</p>
-
-      <label class="main-title-label">Número de personas</label>
-      <div class="custom-select-wrapper main-selector">
-        <div class="custom-select" id="peopleCountCustom" onclick="toggleSelect(this)">
-          <span class="selected-option">Seleccionar cantidad...</span>
-          <div class="custom-options" id="peopleOptions"></div>
+    <div class="container">
+      <div class="insta-profile-header">
+        <div class="profile-circle">
+          <img src="images/logo_pareja-19-removebg-preview.png" alt="E&T" loading="lazy">
         </div>
-        <input type="hidden" id="peopleCount" value="">
+        <div class="profile-info">
+          <h3>@emiytito.nochedeboda</h3>
+          <p>Nuestra historia en fotos</p>
+        </div>
       </div>
-
-      <div id="guests"></div>
-
-      <p id="formError" class="form-error hidden">Por favor completá todos los campos obligatorios.</p>
-
-      <button id="submitBtn">Confirmar</button>
-<div id="thanks" class="thanks hidden">
-  <h2 class="thanks-title">Gracias! </h2>
-  <p class="thanks-subtitle">nos vemos en nuestro gran día.</p>
-  <img src="images/Ilustracionupa-removebg-preview.png" alt="Ilustración Novios" class="thanks-illustration">
-</div>
+      <div class="insta-action">
+        <a href="https://www.instagram.com/emiytito.nochedeboda?igsh=NWgxbXJoMmh1YzVi&utm_source=qr" target="_blank" class="btn-chusmear">
+          ENTRAR A INSTAGRAM
+        </a>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+
+  <!-- RSVP -->
+  <section class="rsvp reveal" id="rsvpSection" style="display: none;">
+    <div class="container">
+      <div class="rsvp-inner">
+        <div class="card">
+          <span class="guest-label">Invitados</span>
+          <h3 id="familyName"></h3>
+          <p id="slots"></p>
+        </div>
+
+        <h2 class="title">Confirmá tu asistencia</h2>
+        <p class="limit">Antes del 24 de Septiembre 2026</p>
+
+        <label class="main-title-label">Número de personas</label>
+        <div class="custom-select-wrapper main-selector">
+          <div class="custom-select" id="peopleCountCustom" onclick="toggleSelect(this)">
+            <span class="selected-option">Seleccionar cantidad...</span>
+            <div class="custom-options" id="peopleOptions"></div>
+          </div>
+          <input type="hidden" id="peopleCount" value="">
+        </div>
+
+        <div id="guests"></div>
+        <p id="formError" class="form-error hidden">Por favor completá todos los campos obligatorios.</p>
+        <button id="submitBtn">Confirmar</button>
+
+        <div id="thanks" class="thanks hidden">
+          <h2 class="thanks-title">Gracias! </h2>
+          <p class="thanks-subtitle">nos vemos en nuestro gran día.</p>
+          <img src="images/Ilustracionupa-removebg-preview.png" alt="Ilustración Novios" class="thanks-illustration" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
 
   <footer>
-    <p>
-      Una experiencia creada por
-      <a href="https://atelierinvitaciones.com/" target="_blank" rel="noopener">
-        Atelier Invitaciones
-      </a>
-    </p>
+    <p>Una experiencia creada por <a href="https://atelierinvitaciones.com/" target="_blank" rel="noopener">Atelier Invitaciones</a></p>
   </footer>
 
 </main>
@@ -245,7 +221,6 @@
 <div id="hotelModal" class="hotel-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
   <div class="modal-content">
     <span class="close-modal" onclick="closeModal()" role="button" aria-label="Cerrar">&times;</span>
-
     <h2 id="modalTitle">Alojamiento</h2>
     <p class="modal-subtitle">Opciones recomendadas en la zona.</p>
 
@@ -284,32 +259,17 @@
     <h2>Transporte</h2>
     <div class="hotel-list">
       <h3 class="location-divider">ARROYITO</h3>
-      <div class="transport-item">
-        <p><strong>Remises Arroyito:</strong> <br> 3576-485018 / 452525</p>
-      </div>
-      <div class="transport-item">
-        <p><strong>Remiseria Santo Domingo:</strong> <br> WhatsApp: 3576-521326</p>
-      </div>
-
+      <div class="transport-item"><p><strong>Remises Arroyito:</strong> <br> 3576-485018 / 452525</p></div>
+      <div class="transport-item"><p><strong>Remiseria Santo Domingo:</strong> <br> WhatsApp: 3576-521326</p></div>
       <h3 class="location-divider">SAN FRANCISCO</h3>
-      <div class="transport-item">
-        <p><strong>Remises Premium:</strong> <br> WhatsApp: 3564-388000</p>
-      </div>
-      <div class="transport-item">
-        <p><strong>Remises Los Más Rápidos:</strong> <br> 3564-422717 / 307673</p>
-      </div>
-      <div class="transport-item">
-        <p><strong>Remis José Luis Ferraris:</strong> <br> 3564-630505</p>
-      </div>
+      <div class="transport-item"><p><strong>Remises Premium:</strong> <br> WhatsApp: 3564-388000</p></div>
+      <div class="transport-item"><p><strong>Remises Los Más Rápidos:</strong> <br> 3564-422717 / 307673</p></div>
+      <div class="transport-item"><p><strong>Remis José Luis Ferraris:</strong> <br> 3564-630505</p></div>
     </div>
-
-    <p class="modal-footer-info">
-      Si te interesa sumarte a traslados grupales en buses o combis, consultanos.
-    </p>
+    <p class="modal-footer-info">Si te interesa sumarte a traslados grupales en buses o combis, consultanos.</p>
   </div>
 </div>
 
-<script src="script.js">
-</script>
+<script src="script.js"></script>
 </body>
 </html>

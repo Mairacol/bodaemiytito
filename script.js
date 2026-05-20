@@ -1,4 +1,3 @@
-// ⚠️ REEMPLAZAR con el ID real del Google Apps Script
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwVfRzCLT80DuFsj12BS25jtEfveVoNNz5tFpKh65GHDu-a0SWrgb9Cx612WEOK-HBcyQ/exec";
 
 const params = new URLSearchParams(window.location.search);
@@ -9,7 +8,6 @@ const familyName = document.getElementById('familyName');
 const slotsText = document.getElementById('slots');
 const guestsDiv = document.getElementById('guests');
 
-// Elementos del selector lindo
 const peopleOptions = document.getElementById('peopleOptions');
 const hiddenPeopleInput = document.getElementById('peopleCount'); 
 const selectedDisplay = document.querySelector('#peopleCountCustom .selected-option');
@@ -19,7 +17,7 @@ if (familyName) familyName.innerText = `Familia ${family}`;
 if (slotsText) slotsText.innerText = `Hay ${slots} lugares reservados`;
 
 /* =========================================
-   1. POBLAR SELECTOR PRINCIPAL (CANTIDAD)
+   1. POBLAR SELECTOR PRINCIPAL 
    ========================================= */
 if (peopleOptions) {
     for (let i = 1; i <= slots; i++) {
@@ -29,18 +27,11 @@ if (peopleOptions) {
         
         divOption.onclick = function(e) {
             e.stopPropagation();
-            
-            // Actualizar visual y valor oculto
             if (selectedDisplay) selectedDisplay.innerText = this.innerText;
             if (hiddenPeopleInput) hiddenPeopleInput.value = i;
-            
-            // Cerrar menú
             this.closest('.custom-select').classList.remove('open');
-            
-            // Disparar la generación de campos de invitados
             generarCamposInvitados(i);
         };
-        
         peopleOptions.appendChild(divOption);
     }
 }
@@ -50,19 +41,15 @@ if (peopleOptions) {
    ========================================= */
 function generarCamposInvitados(cantidad) {
     if (!guestsDiv) return;
-    
-    // Si la cantidad es 0 o no hay selección, vaciamos y salimos
     if (!cantidad || cantidad < 1) {
         guestsDiv.innerHTML = '';
         return;
     }
-
-    guestsDiv.innerHTML = ''; // Limpiar antes de crear
+    guestsDiv.innerHTML = ''; 
 
     for (let i = 1; i <= cantidad; i++) {
         const div = document.createElement('div');
-        div.classList.add('guest');
-        div.classList.add('reveal', 'active'); 
+        div.classList.add('guest', 'reveal', 'active'); 
 
         div.innerHTML = `
             <h4>Invitado ${i}</h4>
@@ -95,9 +82,6 @@ function generarCamposInvitados(cantidad) {
     }
 }
 
-/* =========================================
-   3. FUNCIONES DE CONTROL (SELECTS LINDOS)
-   ========================================= */
 function toggleSelect(element) {
     document.querySelectorAll('.custom-select').forEach(s => {
         if (s !== element) s.classList.remove('open');
@@ -117,7 +101,6 @@ function selectOption(element, value) {
     if (window.event) window.event.stopPropagation();
 }
 
-// Cerrar si clickean fuera (Unificado)
 window.addEventListener('click', function(e) {
     if (!e.target.closest('.custom-select')) {
         document.querySelectorAll('.custom-select').forEach(s => s.classList.remove('open'));
@@ -125,7 +108,7 @@ window.addEventListener('click', function(e) {
 });
 
 /* =========================================
-   4. LÓGICA DE MÚSICA
+   3. LÓGICA DE MÚSICA
    ========================================= */
 const music = document.getElementById('music');
 const musicBtn = document.getElementById('musicBtn');
@@ -134,9 +117,9 @@ const svgPath = document.getElementById('svgPath');
 const actualizarIcono = () => {
   if (!music || !svgPath) return;
   if (music.paused) {
-    svgPath.setAttribute('d', 'M8 5v14l11-7z'); // Icono Play
+    svgPath.setAttribute('d', 'M8 5v14l11-7z'); 
   } else {
-    svgPath.setAttribute('d', 'M6 19h4V5H6v14zm8-14v14h4V5h-4z'); // Icono Pausa
+    svgPath.setAttribute('d', 'M6 19h4V5H6v14zm8-14v14h4V5h-4z'); 
   }
 };
 
@@ -146,7 +129,7 @@ const arrancarMusica = () => {
     actualizarIcono();
     document.removeEventListener('click', arrancarMusica);
     document.removeEventListener('touchstart', arrancarMusica);
-  }).catch(err => console.log("Esperando interacción del usuario..."));
+  }).catch(() => {});
 };
 
 document.addEventListener('click', arrancarMusica);
@@ -165,15 +148,10 @@ if (musicBtn) {
   });
 }
 
-if (music) {
-  music.onplay = actualizarIcono;
-  music.onpause = actualizarIcono;
-}
-
 /* =========================================
-   5. INTRO SOBRE
+   4. INTRO SOBRE
    ========================================= */
-window.addEventListener('load', () => {
+window.addEventListener('DOMContentLoaded', () => {
   const intro = document.getElementById('intro-overlay');
   if (intro) {
     intro.addEventListener('click', () => {
@@ -183,18 +161,17 @@ window.addEventListener('load', () => {
         document.body.style.overflow = 'auto'; 
         setTimeout(() => {
           intro.style.display = 'none';
-        }, 1000);
-      }, 2000); 
+        }, 800);
+      }, 1800); 
     });
   }
 });
 
 /* =========================================
-   6. VALIDACIÓN DEL FORMULARIO
+   5. VALIDACIÓN & SUBMIT
    ========================================= */
 function validarFormulario() {
   let valido = true;
-
   document.querySelectorAll('.field-error').forEach(el => el.classList.remove('field-error'));
 
   document.querySelectorAll('.guest').forEach((g, i) => {
@@ -206,23 +183,15 @@ function validarFormulario() {
       nombre.classList.add('field-error');
       valido = false;
     }
-
     if (apellido && !apellido.value.trim()) {
       apellido.classList.add('field-error');
       valido = false;
     }
-
-    if (!asistenteChecked) {
-      valido = false;
-    }
+    if (!asistenteChecked) valido = false;
   });
-
   return valido;
 }
 
-/* =========================================
-   7. SUBMIT CON COBERTURA TOTAL DE LIMPIEZA
-   ========================================= */
 if (submitBtn) {
   submitBtn.addEventListener('click', async () => {
     const errorMsg = document.getElementById('formError');
@@ -263,9 +232,6 @@ if (submitBtn) {
         body: JSON.stringify({ familia: family, guests: guests })
       });
 
-      // --------------------------------------------------------------------
-      // ¡APAGÓN TOTAL DEL FORMULARIO DE CARGA VIEJO!
-      // --------------------------------------------------------------------
       submitBtn.style.display = 'none';
       if (familyName) familyName.style.display = 'none';
       if (slotsText) slotsText.style.display = 'none';
@@ -273,7 +239,7 @@ if (submitBtn) {
       const cardContainer = document.querySelector('.rsvp .card');
       const rsvpTitle = document.querySelector('.rsvp .title') || document.querySelector('.title');
       const rsvpLimit = document.querySelector('.rsvp .limit') || document.querySelector('.limit');
-      const mainLabel = document.querySelector('.main-title-label') || document.querySelector('.mini-label');
+      const mainLabel = document.querySelector('.main-title-label');
       const mainSelector = document.querySelector('.main-selector');
 
       if (cardContainer) cardContainer.style.display = 'none';
@@ -282,52 +248,45 @@ if (submitBtn) {
       if (mainLabel) mainLabel.style.display = 'none';
       if (mainSelector) mainSelector.style.display = 'none';
 
-      // Vaciamos y dormimos las tarjetas dinámicas de invitados
       if (guestsDiv) {
         guestsDiv.innerHTML = '';
         guestsDiv.style.display = 'none';
       }
 
-      // REVELAMOS LA PANTALLA DE AGRADECIMIENTO EDITORIAL
       const thanksDiv = document.getElementById('thanks');
       if (thanksDiv) {
           thanksDiv.classList.remove('hidden');
           thanksDiv.style.display = 'flex'; 
-          thanksDiv.style.flexDirection = 'column';
-          thanksDiv.style.alignItems = 'center';
-          thanksDiv.style.justifyContent = 'center';
-          thanksDiv.style.minHeight = '420px'; 
       }
-
-      // Estados de reseteo lógico por seguridad
-      if (hiddenPeopleInput) hiddenPeopleInput.value = '';
-      if (selectedDisplay) selectedDisplay.innerText = 'Seleccionar cantidad...';
 
     } catch (error) {
       console.error(error);
       submitBtn.disabled = false;
       submitBtn.textContent = 'Confirmar';
-      
-      if (errorMsg) {
-        errorMsg.classList.remove('hidden');
-        errorMsg.style.display = 'block';
-        errorMsg.textContent = 'Hubo un problema al enviar.';
-      }
     }
   });
 }
 
 /* =========================================
-   8. INTERSECTION OBSERVER (REVEAL)
+   6. INTERSECTION OBSERVER OPTIMIZADO
    ========================================= */
 const revealOptions = {
-  threshold: 0.1, 
-  rootMargin: "0px 0px -50px 0px" 
+  threshold: 0.05, 
+  rootMargin: "0px 0px -20px 0px" 
 };
 
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
+      // Si la sección que cruza es la playlist, cargamos el iframe de Spotify de manera diferida (Lazy)
+      if (entry.target.classList.contains('playlist')) {
+        const iframe = document.getElementById('spotify-iframe');
+        if (iframe && iframe.getAttribute('data-src')) {
+          iframe.setAttribute('src', iframe.getAttribute('data-src'));
+          iframe.removeAttribute('data-src'); // Evita re-procesamiento
+        }
+      }
+      
       requestAnimationFrame(() => {
         entry.target.classList.add('active');
       });
@@ -341,7 +300,7 @@ document.querySelectorAll('.reveal').forEach((el) => {
 });
 
 /* =========================================
-   9. MODAL HOTELES
+   7. MODAL HOTELES & CONTROL INICIAL
    ========================================= */
 function openModal() {
   const modal = document.getElementById("hotelModal");
@@ -355,20 +314,9 @@ function closeModal() {
 
 window.addEventListener('click', function(event) {
   const modal = document.getElementById("hotelModal");
-  if (event.target === modal) {
-    modal.style.display = "none";
-  }
+  if (event.target === modal) modal.style.display = "none";
 });
 
-window.addEventListener('keydown', function(event) {
-  if (event.key === 'Escape') {
-    closeModal();
-  }
-});
-
-/* ==========================================================================
-   10. CONTROL DE VISIBILIDAD RSVP INICIAL (DOMContentLoaded)
-   ========================================================================== */
 document.addEventListener("DOMContentLoaded", () => {
     const paramsUrl = new URLSearchParams(window.location.search);
     const familiaUrl = paramsUrl.get('familia');
@@ -377,17 +325,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const rsvpSection = document.getElementById('rsvpSection');
     const thanksDiv = document.getElementById('thanks');
 
-    // 1. Nos aseguramos de entrada que el thanks arranque invisible
     if (thanksDiv) {
         thanksDiv.style.display = 'none';
         thanksDiv.classList.add('hidden');
     }
 
-    // 2. Si la URL tiene los parámetros, hacemos visible la sección del formulario
     if (familiaUrl && slotsUrl) {
         if (rsvpSection) rsvpSection.style.display = "block";
     } else {
         if (rsvpSection) rsvpSection.style.display = "none";
-        console.log("Acceso no válido: Falta familia o slots en la URL.");
     }
 });

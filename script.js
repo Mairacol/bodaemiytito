@@ -12,7 +12,7 @@ const peopleOptions = document.getElementById('peopleOptions');
 const hiddenPeopleInput = document.getElementById('peopleCount'); 
 const selectedDisplay = document.querySelector('#peopleCountCustom .selected-option');
 const submitBtn = document.getElementById('submitBtn');
-
+const validationCodeInput = document.getElementById('validationCode');
 if (familyName) familyName.innerText = `Familia ${family}`;
 if (slotsText) slotsText.innerText = `Hay ${slots} lugares reservados`;
 
@@ -209,7 +209,45 @@ if (submitBtn) {
       errorMsg.classList.add('hidden');
       errorMsg.style.display = 'none';
     }
+// ========================================================
+    // MODIFICACIÓN ACÁ: FILTRO ANTI-BOT (HONEYPOT)
+    // ========================================================
+    const honeypotValue = validationCodeInput ? validationCodeInput.value : '';
+    if (honeypotValue.trim() !== '') {
+      console.warn("Bot detectado y bloqueado.");
+      
+      // Ejecutamos exactamente la misma lógica visual de éxito que tenías abajo
+      // pero sin hacer el "fetch" a Google Apps Script. El bot cree que ganó, pero no te ensucia la planilla.
+      submitBtn.style.display = 'none';
+      if (familyName) familyName.style.display = 'none';
+      if (slotsText) slotsText.style.display = 'none';
+      
+      const cardContainer = document.querySelector('.rsvp .card');
+      const rsvpTitle = document.querySelector('.rsvp .title') || document.querySelector('.title');
+      const rsvpLimit = document.querySelector('.rsvp .limit') || document.querySelector('.limit');
+      const mainLabel = document.querySelector('.main-title-label');
+      const mainSelector = document.querySelector('.main-selector');
 
+      if (cardContainer) cardContainer.style.display = 'none';
+      if (rsvpTitle) rsvpTitle.style.display = 'none';
+      if (rsvpLimit) rsvpLimit.style.display = 'none';
+      if (mainLabel) mainLabel.style.display = 'none';
+      if (mainSelector) mainSelector.style.display = 'none';
+
+      if (guestsDiv) {
+        guestsDiv.innerHTML = '';
+        guestsDiv.style.display = 'none';
+      }
+
+      const thanksDiv = document.getElementById('thanks');
+      if (thanksDiv) {
+        thanksDiv.classList.remove('hidden');
+        thanksDiv.style.display = 'flex'; 
+      }
+      
+      return; // ESTE RETURN ES CLAVE: Corta el código acá para no mandar el POST
+    }
+    // ========================================================
     submitBtn.disabled = true;
     submitBtn.textContent = 'Enviando...';
 

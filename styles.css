@@ -1390,6 +1390,12 @@ footer a {
     mix-blend-mode: darken; 
     clip-path: inset(15% 0% 0% 0%);
   }
+.click-hint {
+    /* En escritorio anulamos el top y lo fijamos abajo de forma segura */
+    top: auto !important; 
+    bottom: -45px !important; 
+    font-size: 0.85rem;
+  }
 }
 
 @media (max-width: 600px) {

@@ -266,63 +266,67 @@ clip-path: inset(15% 0% 0% 0%);
 }
 
 /* =========================================
-   4. QUOTE
+   4. QUOTE (Optimizado UX/UI Profesional)
    ========================================= */
 .quote {
   text-align: center;
-  padding: 100px 25px;
-  position: relative;
+  padding: 80px 25px 120px 25px; /* Agregamos 120px abajo para proteger la zona del botón flotante */
   max-width: 600px;
   margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.quote-marks {
+  font-family: 'Playfair Display', serif;
+  font-size: 64px;             /* Un toque más compacto y sutil */
+  color: #c4002f;
+  line-height: 1;
+  margin-bottom: 25px;
+  letter-spacing: -3px;
+  opacity: 0.18;               /* Subida sutil para que no desaparezca con el sol */
 }
 
 .quote p {
   font-family: 'Courier Prime', monospace;
-  font-size: clamp(18px, 4vw, 24px);
+  font-size: clamp(16px, 4.5vw, 20px); /* Ajuste de escala para que en mobile no quede gigante */
   line-height: 1.8;
-  color: #444;
+  color: #333333;              /* Un gris casi negro mejora la lectura frente al rojo */
   font-style: italic;
   margin: 0;
 }
 
-.quote p::after {
-  display: block;
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  color: #c4002f;
-  margin-top: 20px;
-  font-style: normal;
-  opacity: 0.8;
-}
-
-.quote::before {
-  content: "\201C";
-  font-family: 'Playfair Display', serif;
-  font-size: 80px;
-  color: #c4002f;
-  opacity: 0.1;
-  position: absolute;
-  top: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
 .logo-img {
-  max-width: 180px;
+  max-width: 150px;            /* Reducido un 15% para que no compita en peso con los textos grandes */
   height: auto;
-  margin-top: 155px;
-  opacity: 0.8;
-  filter: brightness(1.1);
+  margin-top: 80px;            /* Un respiro más controlado y orgánico */
+  opacity: 0.9;
 }
 
-.logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* Contenedor de la info */
+.quote-event-info {
+  margin-top: 50px;            /* Distancia perfecta y equilibrada hacia la fecha */
 }
 
+/* Estilos para la fecha */
+.event-date {
+  font-family: 'Old Bridges', cursive;
+  font-size: 34px;
+  color: #c4002f; 
+  margin: 0 0 20px 0;          /* Espacio controlado con el lugar */
+  font-weight: normal;
+}
+
+/* Estilos para el lugar (Tu bloque con UX aplicado) */
+.event-location {
+  font-family: 'Courier Prime', monospace;
+  font-size: 46px;             /* Ajustado de 54px a 46px para evitar saltos de línea indeseados en pantallas chicas (ej. iPhone SE) */
+  text-transform: uppercase;
+  letter-spacing: 4px;         /* Un pelín más de aire entre letras para el look premium */
+  color: #c4002f;
+  margin: 0;
+  opacity: 0.22;               /* Transparencia balanceada: se ve fina pero es accesible */
+  line-height: 1.2;
+}
 /* =========================================
    5. MAPA
    ========================================= */

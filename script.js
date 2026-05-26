@@ -17,23 +17,15 @@ if (familyName) familyName.innerText = `Familia ${family}`;
 if (slotsText) slotsText.innerText = `Hay ${slots} lugares reservados`;
 
 /* =========================================
-   1. POBLAR SELECTOR PRINCIPAL 
+   1. GENERAR CAMPOS AUTOMÁTICAMENTE (NUEVO FLUJO)
    ========================================= */
-if (peopleOptions) {
-    for (let i = 1; i <= slots; i++) {
-        const divOption = document.createElement('div');
-        divOption.classList.add('option');
-        divOption.innerText = i + (i === 1 ? ' persona' : ' personas');
-        
-        divOption.onclick = function(e) {
-            e.stopPropagation();
-            if (selectedDisplay) selectedDisplay.innerText = this.innerText;
-            if (hiddenPeopleInput) hiddenPeopleInput.value = i;
-            this.closest('.custom-select').classList.remove('open');
-            generarCamposInvitados(i);
-        };
-        peopleOptions.appendChild(divOption);
-    }
+// En lugar de usar un selector para elegir parciales, inyectamos directo el total de sus pases al iniciar
+if (slots && slots > 0) {
+    if (hiddenPeopleInput) hiddenPeopleInput.value = slots;
+    if (selectedDisplay) selectedDisplay.innerText = slots + (slots === 1 ? ' persona' : ' personas');
+    
+    // Inyecta directamente la totalidad de los bloques en pantalla
+    generarCamposInvitados(slots);
 }
 
 /* =========================================
@@ -168,41 +160,77 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 /* =========================================
-   5. VALIDACIÓN & SUBMIT
+   5. VALIDACIÓN & SUBMIT (ESTRICTA E IMPLACABLE)
    ========================================= */
 function validarFormulario() {
   let valido = true;
+  let primerError = null;
+
+  // Limpiamos errores visuales de ejecuciones previas
   document.querySelectorAll('.field-error').forEach(el => el.classList.remove('field-error'));
 
-  document.querySelectorAll('.guest').forEach((g, i) => {
+  const bloquesInvitados = document.querySelectorAll('.guest');
+
+  // Si no hay bloques renderizados, se frena el flujo
+  if (bloquesInvitados.length === 0) {
+    return false;
+  }
+
+  // Recorremos de manera rigurosa cada uno de los bloques activos
+  for (let i = 0; i < bloquesInvitados.length; i++) {
+    const g = bloquesInvitados[i];
     const nombre = g.querySelector('.nombre');
     const apellido = g.querySelector('.apellido');
-    const asistenteChecked = g.querySelector(`input[name="asiste${i+1}"]:checked`);
+    const asistenteChecked = g.querySelector(`input[name="asiste${i + 1}"]:checked`);
 
+    // Validar Nombre
     if (nombre && !nombre.value.trim()) {
       nombre.classList.add('field-error');
       valido = false;
+      if (!primerError) primerError = nombre;
     }
+
+    // Validar Apellido
     if (apellido && !apellido.value.trim()) {
       apellido.classList.add('field-error');
       valido = false;
+      if (!primerError) primerError = apellido;
     }
-    if (!asistenteChecked) valido = false;
-  });
+
+    // Validar Selección Sí/No
+    if (!asistenteChecked) {
+      valido = false;
+      const radioGroup = g.querySelector('.radio-group');
+      if (radioGroup) {
+        radioGroup.classList.add('field-error');
+        if (!primerError) primerError = radioGroup;
+      }
+    }
+  }
+
+  // Si se encuentra un campo incompleto, hace scroll suave hasta la posición exacta
+  if (!valido && primerError) {
+    primerError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
   return valido;
 }
 
 if (submitBtn) {
-  submitBtn.addEventListener('click', async () => {
+  submitBtn.addEventListener('click', async (e) => {
+    if (e) e.preventDefault(); 
+
     const errorMsg = document.getElementById('formError');
 
-    if (!validarFormulario()) {
+    // Validador estricto que actúa como barrera absoluta antes del fetch
+    const esValido = validarFormulario();
+    if (!esValido) {
       if (errorMsg) {
         errorMsg.classList.remove('hidden');
         errorMsg.style.display = 'block';
         errorMsg.textContent = 'Por favor completá todos los campos obligatorios y seleccioná si asiste cada persona.';
       }
-      return;
+      return; 
     }
 
     if (errorMsg) {
@@ -210,13 +238,13 @@ if (submitBtn) {
       errorMsg.style.display = 'none';
     }
 
-    // Lógica para limpiar la pantalla de fondo de manera unificada
+    // Elimina el formulario del fondo de manera sutil y limpia
     const limpiarInterfazRsvp = () => {
       const rsvpInner = document.querySelector('.rsvp-inner');
       if (rsvpInner) {
         rsvpInner.innerHTML = `
           <div style="text-align: center; padding: 50px 20px; animation: fadeIn 0.5s ease-in-out;">
-            <h3 style="font-family: 'Old Bridges', sans-serif; color: #b23b57; font-size: 34px; margin-bottom: 10px;">
+            <h3 style="font-family: 'Old Bridges', sans-serif; color: #b23b57; font-size: 24px; margin-bottom: 10px;">
               Asistencia Confirmada
             </h3>
             <p style="color: #666; font-size: 14px;">¡Tu respuesta fue guardada con éxito!</p>
@@ -231,7 +259,6 @@ if (submitBtn) {
     const honeypotValue = validationCodeInput ? validationCodeInput.value : '';
     if (honeypotValue.trim() !== '') {
       console.warn("Bot detectado y bloqueado.");
-      
       limpiarInterfazRsvp();
       openThanksModal();
       return; 
@@ -260,7 +287,6 @@ if (submitBtn) {
         body: JSON.stringify({ familia: family, guests: guests })
       });
 
-      // Eliminamos el formulario e "Enviando..." y abrimos el Modal de Gracias encima
       limpiarInterfazRsvp();
       openThanksModal();
 
@@ -305,7 +331,7 @@ document.querySelectorAll('.reveal').forEach((el) => {
 });
 
 /* =========================================
-   7. MODAL HOTELES & MODAL GRACIAS (CORREGIDO)
+   7. MODAL HOTELES & MODAL GRACIAS
    ========================================= */
 function openModal() {
   const modal = document.getElementById("hotelModal");
@@ -317,7 +343,6 @@ function closeModal() {
   if (modal) modal.style.display = "none";
 }
 
-// Funciones exclusivas para el nuevo Modal de Gracias (Evita conflictos)
 function openThanksModal() {
   const thanksModal = document.getElementById('thanksModal');
   if (thanksModal) thanksModal.classList.remove('hidden');
@@ -328,7 +353,6 @@ function closeThanksModal() {
   if (thanksModal) thanksModal.classList.add('hidden');
 }
 
-// Escuchador global de clicks modificado para ambos modales
 window.addEventListener('click', function(event) {
   const hotelModal = document.getElementById("hotelModal");
   const thanksModal = document.getElementById("thanksModal");

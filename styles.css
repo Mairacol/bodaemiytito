@@ -1308,55 +1308,100 @@ footer a {
         transform: translateY(0);
     }
 }
-/* ==========================================================================
-   ILUSTRACIÓN DE AGRADECIMIENTO (SENTIDO DE AUTOR)
-   ========================================================================== */
-.thanks {
+/* Contenedor de fondo del Pop-up */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Caja del Pop-up */
+.modal-content {
+  background: #fcfaf7;
+  padding: 40px 25px 30px 25px; /* Más espacio arriba para balancear */
+  border-radius: 16px;
+  max-width: 400px;
+  width: 85%;
   text-align: center;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  
+  /* Forzamos a que todo el contenido interno se alinee perfectamente al centro */
   display: flex;
   flex-direction: column;
+  align-items: center; 
+}
+
+/* Botón de cerrar (X) */
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #f0f0f0;
+  border: none;
+  font-size: 18px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #555;
+  display: flex;
   align-items: center;
-}
-/* Un "Gracias" sutil, con personalidad y más aire */
-.thanks h2.thanks-title {
-  font-family: 'Old Bridges', cursive; /* O tu tipografía de autor manuscrita/serif */
-  font-size: 2.8rem;
-  color: #c4002f; /* El rojo de tu trazo para unificar */
-  margin-bottom: 12px;
-  font-weight: normal;
+  justify-content: center;
+  transition: background 0.2s;
+  z-index: 10;
 }
 
-.thanks p.thanks-subtitle {
-  font-family: 'Courier Prime', monospace;
-  font-size: 0.95rem;
-  letter-spacing: 2px; /* Espaciado de letras premium */
-  color: rgba(0,0,0,0.6);
-  margin-bottom: 45px; /* Más despegado de la ilustración para que respire */
+.modal-close:hover {
+  background: #e0e0e0;
 }
 
+/* =========================================
+   ESTILOS INTERNOS DEL POP-UP (NUEVOS)
+   ========================================= */
+.thanks-title {
+  font-family: 'Old Bridges', sans-serif; /* Tu fuente editorial */
+  color: #b23b57;
+  font-size: 32px;
+  margin: 0 0 8px 0;
+}
+
+.thanks-subtitle {
+  color: #555;
+  font-size: 15px;
+  margin: 0 0 20px 0;
+}
+
+/* Control absoluto y centrado de la ilustración */
 .thanks-illustration {
-  max-width: 280px; /* Tamaño boutique controlado para que no sature */
+  display: block;
+  max-width: 280px; /* Tamaño controlado para que luzca delicado */
   width: 100%;
   height: auto;
-  margin-top: 35px; /* "Breathing room" para despegarla del texto */
-  mix-blend-mode: multiply; /* Si tu imagen tiene fondo blanco puro, esto hace que se fusione perfectamente con tu fondo texturizado */
-  opacity: 0;
-  transform: translateY(10px);
-  animation: sutilAparicion 0.8s ease forwards 0.2s; /* Aparece con un sutil desplazamiento hacia arriba */
+  margin: 0 auto; /* Centrado horizontal clásico */
+  object-fit: contain;
 }
 
-/* Animación fluida para la aparición de la pieza */
-@keyframes sutilAparicion {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Animación de entrada */
+@keyframes popIn {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
-/* Ocultar la pantalla de agradecimiento por defecto en el arranque */
-#thanks.hidden {
+
+/* Clase para ocultar */
+.modal-overlay.hidden {
   display: none !important;
 }
-
 /* =========================================
    14. RESPONSIVE
    ========================================= */

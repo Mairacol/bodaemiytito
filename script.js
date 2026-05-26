@@ -209,45 +209,35 @@ if (submitBtn) {
       errorMsg.classList.add('hidden');
       errorMsg.style.display = 'none';
     }
-// ========================================================
-    // MODIFICACIÓN ACÁ: FILTRO ANTI-BOT (HONEYPOT)
+
+    // Lógica para limpiar la pantalla de fondo de manera unificada
+    const limpiarInterfazRsvp = () => {
+      const rsvpInner = document.querySelector('.rsvp-inner');
+      if (rsvpInner) {
+        rsvpInner.innerHTML = `
+          <div style="text-align: center; padding: 50px 20px; animation: fadeIn 0.5s ease-in-out;">
+            <h3 style="font-family: 'Old Bridges', sans-serif; color: #b23b57; font-size: 34px; margin-bottom: 10px;">
+              Asistencia Confirmada
+            </h3>
+            <p style="color: #666; font-size: 14px;">¡Tu respuesta fue guardada con éxito!</p>
+          </div>
+        `;
+      }
+    };
+
+    // ========================================================
+    // FILTRO ANTI-BOT (HONEYPOT) - ACCIÓN DE ÉXITO FALSA
     // ========================================================
     const honeypotValue = validationCodeInput ? validationCodeInput.value : '';
     if (honeypotValue.trim() !== '') {
       console.warn("Bot detectado y bloqueado.");
       
-      // Ejecutamos exactamente la misma lógica visual de éxito que tenías abajo
-      // pero sin hacer el "fetch" a Google Apps Script. El bot cree que ganó, pero no te ensucia la planilla.
-      submitBtn.style.display = 'none';
-      if (familyName) familyName.style.display = 'none';
-      if (slotsText) slotsText.style.display = 'none';
-      
-      const cardContainer = document.querySelector('.rsvp .card');
-      const rsvpTitle = document.querySelector('.rsvp .title') || document.querySelector('.title');
-      const rsvpLimit = document.querySelector('.rsvp .limit') || document.querySelector('.limit');
-      const mainLabel = document.querySelector('.main-title-label');
-      const mainSelector = document.querySelector('.main-selector');
-
-      if (cardContainer) cardContainer.style.display = 'none';
-      if (rsvpTitle) rsvpTitle.style.display = 'none';
-      if (rsvpLimit) rsvpLimit.style.display = 'none';
-      if (mainLabel) mainLabel.style.display = 'none';
-      if (mainSelector) mainSelector.style.display = 'none';
-
-      if (guestsDiv) {
-        guestsDiv.innerHTML = '';
-        guestsDiv.style.display = 'none';
-      }
-
-      const thanksDiv = document.getElementById('thanks');
-      if (thanksDiv) {
-        thanksDiv.classList.remove('hidden');
-        thanksDiv.style.display = 'flex'; 
-      }
-      
-      return; // ESTE RETURN ES CLAVE: Corta el código acá para no mandar el POST
+      limpiarInterfazRsvp();
+      openThanksModal();
+      return; 
     }
     // ========================================================
+
     submitBtn.disabled = true;
     submitBtn.textContent = 'Enviando...';
 
@@ -270,35 +260,13 @@ if (submitBtn) {
         body: JSON.stringify({ familia: family, guests: guests })
       });
 
-      submitBtn.style.display = 'none';
-      if (familyName) familyName.style.display = 'none';
-      if (slotsText) slotsText.style.display = 'none';
-      
-      const cardContainer = document.querySelector('.rsvp .card');
-      const rsvpTitle = document.querySelector('.rsvp .title') || document.querySelector('.title');
-      const rsvpLimit = document.querySelector('.rsvp .limit') || document.querySelector('.limit');
-      const mainLabel = document.querySelector('.main-title-label');
-      const mainSelector = document.querySelector('.main-selector');
-
-      if (cardContainer) cardContainer.style.display = 'none';
-      if (rsvpTitle) rsvpTitle.style.display = 'none';
-      if (rsvpLimit) rsvpLimit.style.display = 'none';
-      if (mainLabel) mainLabel.style.display = 'none';
-      if (mainSelector) mainSelector.style.display = 'none';
-
-      if (guestsDiv) {
-        guestsDiv.innerHTML = '';
-        guestsDiv.style.display = 'none';
-      }
-
-      const thanksDiv = document.getElementById('thanks');
-      if (thanksDiv) {
-          thanksDiv.classList.remove('hidden');
-          thanksDiv.style.display = 'flex'; 
-      }
+      // Eliminamos el formulario e "Enviando..." y abrimos el Modal de Gracias encima
+      limpiarInterfazRsvp();
+      openThanksModal();
 
     } catch (error) {
       console.error(error);
+      alert('Hubo un error de red. Por favor, intentalo de nuevo.');
       submitBtn.disabled = false;
       submitBtn.textContent = 'Confirmar';
     }
@@ -316,12 +284,11 @@ const revealOptions = {
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
-      // Si la sección que cruza es la playlist, cargamos el iframe de Spotify de manera diferida (Lazy)
       if (entry.target.classList.contains('playlist')) {
         const iframe = document.getElementById('spotify-iframe');
         if (iframe && iframe.getAttribute('data-src')) {
           iframe.setAttribute('src', iframe.getAttribute('data-src'));
-          iframe.removeAttribute('data-src'); // Evita re-procesamiento
+          iframe.removeAttribute('data-src'); 
         }
       }
       
@@ -338,7 +305,7 @@ document.querySelectorAll('.reveal').forEach((el) => {
 });
 
 /* =========================================
-   7. MODAL HOTELES & CONTROL INICIAL
+   7. MODAL HOTELES & MODAL GRACIAS (CORREGIDO)
    ========================================= */
 function openModal() {
   const modal = document.getElementById("hotelModal");
@@ -350,9 +317,28 @@ function closeModal() {
   if (modal) modal.style.display = "none";
 }
 
+// Funciones exclusivas para el nuevo Modal de Gracias (Evita conflictos)
+function openThanksModal() {
+  const thanksModal = document.getElementById('thanksModal');
+  if (thanksModal) thanksModal.classList.remove('hidden');
+}
+
+function closeThanksModal() {
+  const thanksModal = document.getElementById('thanksModal');
+  if (thanksModal) thanksModal.classList.add('hidden');
+}
+
+// Escuchador global de clicks modificado para ambos modales
 window.addEventListener('click', function(event) {
-  const modal = document.getElementById("hotelModal");
-  if (event.target === modal) modal.style.display = "none";
+  const hotelModal = document.getElementById("hotelModal");
+  const thanksModal = document.getElementById("thanksModal");
+  
+  if (event.target === hotelModal) {
+    hotelModal.style.display = "none";
+  }
+  if (event.target === thanksModal) {
+    thanksModal.classList.add('hidden');
+  }
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -361,12 +347,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const slotsUrl = paramsUrl.get('slots');
     
     const rsvpSection = document.getElementById('rsvpSection');
-    const thanksDiv = document.getElementById('thanks');
-
-    if (thanksDiv) {
-        thanksDiv.style.display = 'none';
-        thanksDiv.classList.add('hidden');
-    }
 
     if (familiaUrl && slotsUrl) {
         if (rsvpSection) rsvpSection.style.display = "block";

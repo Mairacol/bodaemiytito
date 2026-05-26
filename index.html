@@ -189,7 +189,49 @@
       </div>
     </div>
   </section>
+<!-- POP-UP / MODAL DE GRACIAS -->
+<div id="thanksModal" class="modal-overlay hidden">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeThanksModal()">×</button>
+    <h2 class="thanks-title">¡Gracias!</h2>
+    <p class="thanks-subtitle">Nos vemos en nuestro gran día.</p>
+    <img src="images/Ilustracionupa-removebg-preview.png" alt="Ilustración Novios" class="thanks-illustration" loading="lazy">
+  </div>
+</div>
 
+<!-- RSVP SECTION (Se mantiene igual, pero sin el div de gracias viejo adentro) -->
+<section class="rsvp reveal" id="rsvpSection" style="display: none;">
+  <div class="container">
+    <div class="rsvp-inner">
+      <div class="card">
+        <span class="guest-label">Invitados</span>
+        <h3 id="familyName"></h3>
+        <p id="slots"></p>
+      </div>
+
+      <h2 class="title">Confirmá tu asistencia</h2>
+      <p class="limit">Antes del 24 de Septiembre 2026</p>
+
+      <label class="main-title-label">Número de personas</label>
+      <div class="custom-select-wrapper main-selector">
+        <div class="custom-select" id="peopleCountCustom" onclick="toggleSelect(this)">
+          <span class="selected-option">Seleccionar cantidad...</span>
+          <div class="custom-options" id="peopleOptions"></div>
+        </div>
+        <input type="hidden" id="peopleCount" value="">
+      </div>
+
+      <div id="guests"></div>
+      <p id="formError" class="form-error hidden">Por favor completá todos los campos obligatorios.</p>
+      
+      <div style="display:none !important;" aria-hidden="true">
+        <input type="text" id="validationCode" name="validation_code" tabindex="-1" autocomplete="off">
+      </div>
+      
+      <button id="submitBtn">Confirmar</button>
+    </div>
+  </div>
+</section>
   <!-- RSVP -->
   <section class="rsvp reveal" id="rsvpSection" style="display: none;">
     <div class="container">
@@ -220,11 +262,7 @@
         </div>
         <button id="submitBtn">Confirmar</button>
 
-        <div id="thanks" class="thanks hidden">
-          <h2 class="thanks-title">Gracias! </h2>
-          <p class="thanks-subtitle">nos vemos en nuestro gran día.</p>
-          <img src="images/Ilustracionupa-removebg-preview.png" alt="Ilustración Novios" class="thanks-illustration" loading="lazy">
-        </div>
+       
       </div>
     </div>
   </section>

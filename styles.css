@@ -332,15 +332,17 @@ clip-path: inset(15% 0% 0% 0%);
    ========================================= */
 .map-wrapper {
   width: 100%;
-  max-width: 700px;
+  max-width: 480px; 
   margin: 0 auto;
-  overflow: hidden;
+  overflow: visible;
   position: relative;
 }
 
 .map-content {
   position: relative;
   width: 100%;
+  display: inline-block;
+  -webkit-font-smoothing: antialiased; 
 }
 
 .map-illustration {
@@ -350,55 +352,118 @@ clip-path: inset(15% 0% 0% 0%);
   mix-blend-mode: multiply;
 }
 
-.map-pin {
+/* Estilo base para textos sueltos (Ruta, calles) */
+.map-text {
   position: absolute;
-  transform: translate(-50%, -50%);
-  z-index: 10;
+  color: #000000;
+  white-space: nowrap;
 }
+
+.text-rn19 {
+  font-family: 'Old Bridges';
+  top: 16%;
+  left: 45%;
+  font-size: 23px;
+  font-style: italic;
+}
+
+.text-calle {
+  font-family: 'Old Bridges';
+  top: 25%;
+  left: 23%; 
+  font-size: 23px;
+  line-height: 0.9;
+}
+
+.text-ingreso {
+  font-family: 'Old Bridges';
+  top: 24%;
+  right: 8%;
+  font-size: 23px;
+  letter-spacing: 0.5px;
+  line-height: 0.9;
+}
+
+/* Bloques informativos (Iglesia y Fiesta) */
+.map-text-block {
+  position: absolute;
+  text-align: center;
+  color: #1a1a1a;
+}
+
+.map-text-block .lugar-titulo {
+  font-family: 'Old Bridges';  
+  font-size: 23px;
+  margin-top: -10px;
+  line-height: 1.3;
+  font-weight: normal;
+}
+
+.map-text-block .lugar-hora {
+  font-family: Courier;
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin: 0;
+  margin-top: -20px;
+  margin-left: -15px;
+}
+
+/* Posiciones de los bloques informativos */
+.block-ceremonia {
+  top: 45%;
+  left: 5%;
+  width: 40%;
+}
+
+.block-fiesta {
+  bottom: 8%;
+  left: 5%;
+  width: 40%;
+}
+
+/* =========================================
+   5. MAPA - BOTONES "VER MAPA" (SOLUCIONADO)
+   ========================================= */
 
 .pin-btn {
-  color: #0a0a0a;
-  text-decoration: none;
-  font-size: 10px;
+  display: block;            /* Cambiado a block para que baje automáticamente abajo de la hora */
+  width: fit-content;        /* Se adapta al tamaño de la palabra VER MAPA */
+  margin: 10px auto 0 auto;  /* Lo centra perfecto respecto a los textos superiores */
+  position: relative;
+  z-index: 99;               /* Asegura que quede por encima de cualquier capa del fondo */
+  padding: 6px 10px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 2px;
-  position: relative;
+  color: #000000 !important; /* Negro pleno para diseño editorial high-end */
+  text-decoration: none;
+  cursor: pointer;
 }
 
+/* Propiedades asignadas para evitar el error de reglas vacías */
+.pin-ceremonia {
+  text-align: center;
+}
+
+.pin-fiesta {
+  text-align: center;
+}
+
+/* Línea minimalista inferior interactiva (Underline) */
 .pin-btn::after {
   content: '';
   position: absolute;
   width: 100%;
   height: 1px;
-  bottom: -4px;
+  bottom: -2px;
   left: 0;
-  background-color: #0a0a0a;
+  background-color: #000000;
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
 
 .pin-btn:hover::after {
   transform: scaleX(1);
-}
-
-.pin-ceremonia {
-  top: 61%;
-  left: 24%;
-}
-
-.pin-fiesta {
-  top: 89%;
-  left: 24%;
-}
-.section-title-fecha{
-    font-family: 'Old Bridges', sans-serif;
-  font-size: clamp(32px, 8vw, 48px);
-  color: #c4002f;
-  font-weight: normal;
-  text-align: center;
-  display: block;
-  width: 100%;
-  margin: 0 auto 30px auto;
 }
 /* =========================================
    6. TÍTULOS
@@ -1471,46 +1536,6 @@ footer a {
 
   .is-open .envelope-flap { margin-top: 23%; }
 
-  .map-content {
-    width: 160%;
-    margin-left: -30%;
-  }
-
-  .pin-btn {
-    padding: 8px 12px;
-    font-size: 10px;
-  }
-}
-
-@media (max-width: 480px) {
-  .map-wrapper {
-    height: auto !important;
-    overflow: visible;
-  }
-
-  .map-content {
-    width: 100%;
-    margin-left: 0;
-    left: 0;
-    transform: none;
-  }
-
-  .map-illustration {
-    position: relative;
-    width: 100%;
-    height: auto;
-    transform: none;
-  }
-
-  .pin-ceremonia {
-    top: 63%;
-    left: 18%;
-  }
-
-  .pin-fiesta {
-    top: 91%;
-    left: 18%;
-  }
 }
 
 @media (max-width: 768px) {

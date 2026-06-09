@@ -378,3 +378,13 @@ document.addEventListener("DOMContentLoaded", () => {
         if (rsvpSection) rsvpSection.style.display = "none";
     }
 });
+const scrollIndicator = document.querySelector('.scroll-indicator');
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 30) {
+    scrollIndicator.style.opacity = '0';
+    scrollIndicator.style.pointerEvents = 'none';
+  } else {
+    scrollIndicator.style.opacity = '1';
+  }
+});

@@ -1305,6 +1305,34 @@ footer a {
   margin-bottom: 15px;
   line-height: 1.4;
 }
+.contact-line {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.9rem;
+  color: #333;
+  text-decoration: none;
+  margin-top: 5px;
+}
+
+.icon-premium {
+  width: 14px;
+  height: 14px;
+  margin-right: 10px;
+  stroke: #555;
+  stroke-width: 1.5; /* Línea firme pero delgada */
+  fill: none;
+}
+
+.whatsapp-icon {
+  stroke: #128C7E; /* Verde profesional de WhatsApp, no chillón */
+}
+
+/* Espacio entre items */
+.transport-item {
+  margin-bottom: 20px;
+}
+
 
 .modal-footer-info {
   margin-top: 30px;

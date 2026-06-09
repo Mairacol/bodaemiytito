@@ -325,66 +325,90 @@ clip-path: inset(15% 0% 0% 0%);
   }
 }
 /* =========================================
-   4. QUOTE (Optimizado UX/UI Profesional)
+   SECCIÓN DE FRASE PREMIUM (EDITORIAL)
    ========================================= */
-.quote {
-  text-align: center;
-  padding: 80px 25px 120px 25px; /* Agregamos 120px abajo para proteger la zona del botón flotante */
+
+/* Contenedor principal con amplio aire vertical */
+.premium-quote {
+  padding: 100px 20px 120px; /* Mucho espacio arriba y abajo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* Envoltorio de contenido para control fino */
+.quote-content-wrapper {
   max-width: 600px;
-  margin: 0 auto;
-  box-sizing: border-box;
+  width: 100%;
+  text-align: center;
 }
 
-.quote-marks {
-  font-family: 'Playfair Display', serif;
-  font-size: 64px;             /* Un toque más compacto y sutil */
-  color: #c4002f;
-  line-height: 1;
-  margin-bottom: 25px;
-  letter-spacing: -3px;
-  opacity: 0.18;               /* Subida sutil para que no desaparezca con el sol */
+/* --- Cabecera del Evento --- */
+.event-header {
+  margin-bottom: 70px; /* Separación respirable */
 }
 
-.quote p {
-  font-family: 'Courier Prime', monospace;
-  font-size: clamp(16px, 4.5vw, 20px); /* Ajuste de escala para que en mobile no quede gigante */
-  line-height: 1.8;
-  color: #333333;              /* Un gris casi negro mejora la lectura frente al rojo */
-  font-style: italic;
-  margin: 0;
+.logo-container {
+  margin-bottom: 30px;
 }
 
+/* Logo con presencia, sin ser agresivo */
 .logo-img {
-  max-width: 150px;            /* Reducido un 15% para que no compita en peso con los textos grandes */
-  height: auto;
-  margin-top: 80px;            /* Un respiro más controlado y orgánico */
-  opacity: 0.9;
+  width: 130px; /* Aumentado para tener más presencia */
+  max-width: 50vw; /* Asegura que no rompa en móviles muy pequeños */
+  filter: grayscale(0.2); /* Un toque de textura de impresión */
 }
 
-/* Contenedor de la info */
-.quote-event-info {
-  margin-top: 50px;            /* Distancia perfecta y equilibrada hacia la fecha */
-}
-
-/* Estilos para la fecha */
+/* Fecha con impacto visual */
 .event-date {
   font-family: 'Old Bridges', cursive;
-  font-size: 34px;
-  color: #c4002f; 
-  margin: 0 0 20px 0;          /* Espacio controlado con el lugar */
-  font-weight: normal;
-}
-
-/* Estilos para el lugar (Tu bloque con UX aplicado) */
-.event-location {
-  font-family: 'Courier Prime', monospace;
-  font-size: 46px;             /* Ajustado de 54px a 46px para evitar saltos de línea indeseados en pantallas chicas (ej. iPhone SE) */
-  text-transform: uppercase;
-  letter-spacing: 4px;         /* Un pelín más de aire entre letras para el look premium */
+  font-size: clamp(3rem, 10vw, 3.8rem); /* Tipografía fluida */
   color: #c4002f;
   margin: 0;
-  opacity: 0.22;               /* Transparencia balanceada: se ve fina pero es accesible */
-  line-height: 1.2;
+  line-height: 1;
+}
+
+/* Ubicación con espaciado editorial amplio */
+.event-location {
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.8em; /* Tracking ultra amplio para look de lujo */
+  text-transform: uppercase;
+  color: #4a4a4a;
+  display: block;
+  margin-top: 15px;
+  opacity: 0.8;
+}
+
+/* --- Cuerpo de la Frase --- */
+.quote-body {
+  border-top: 1px solid rgba(166, 0, 40, 0.15); /* Línea divisoria sutil */
+  padding-top: 50px;
+  margin: 0 auto;
+}
+
+/* Comillas juntas una al lado de la otra, centradas */
+.quote-marks-pair {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  color: #c4002f;
+  opacity: 0.2; /* Tonalidad marca de agua */
+  display: block;
+  margin-bottom: 25px; /* Espacio antes del texto */
+  letter-spacing: -2px; /* Las acerca un poco más */
+}
+
+/* Texto de la frase con interlineado de lujo */
+.quote-text {
+  font-family: 'Courier Prime', monospace;
+  font-size: 1.1rem;
+  line-height: 2.2; /* Interlineado muy generoso para lectura pausada */
+  color: #222;
+  font-style: italic;
+  max-width: 320px; /* Columna estrecha para look editorial */
+  margin: 0 auto;
+  letter-spacing: 0.02em;
 }
 /* =========================================
    5. MAPA

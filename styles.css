@@ -413,6 +413,7 @@ clip-path: inset(15% 0% 0% 0%);
 /* =========================================
    5. MAPA
    ========================================= */
+   
 .map-wrapper {
   width: 100%;
   max-width: 480px; 
@@ -434,8 +435,26 @@ clip-path: inset(15% 0% 0% 0%);
   display: block;
   mix-blend-mode: multiply;
 }
+/* Nuevo contenedor para el título "Inicio" */
+.section-label {
+  position: absolute;
+  top: -220px; /* Ajusta este valor para subirlo más o menos */
+  left: -30px;
+  width: 100%;
+  z-index: 20; /* Asegura que esté por encima de todo */
+}
 
-/* Estilo base para textos sueltos (Ruta, calles) */
+.lugar-etiqueta {
+  display: inline-block;
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.6em; /* Un aire editorial más marcado */
+  color: #a60028;
+  padding: 5px 15px;
+}
+/*
+ Estilo base para textos sueltos (Ruta, calles)
 .map-text {
   position: absolute;
   color: #000000;
@@ -467,13 +486,24 @@ clip-path: inset(15% 0% 0% 0%);
   line-height: 0.9;
 }
 
-/* Bloques informativos (Iglesia y Fiesta) */
+ Bloques informativos (Iglesia y Fiesta) 
+ */
 .map-text-block {
   position: absolute;
   text-align: center;
   color: #1a1a1a;
 }
-
+/*
+.lugar-etiqueta {
+  display: block;
+  font-family: 'Courier Prime', monospace; 
+  font-size: 0.65rem; 
+  text-transform: uppercase;
+  letter-spacing: 0.3em; 
+  color: #c4002f; 
+  opacity: 0.7;
+  margin-bottom: 8px; 
+}
 .map-text-block .lugar-titulo {
   font-family: 'Old Bridges'!important; 
   font-size: 23px;
@@ -491,7 +521,8 @@ clip-path: inset(15% 0% 0% 0%);
   margin-left: -15px;
 }
 
-/* Posiciones de los bloques informativos */
+Posiciones de los bloques informativos 
+*/
 .block-ceremonia {
   top: 45%;
   left: 5%;
@@ -503,22 +534,23 @@ clip-path: inset(15% 0% 0% 0%);
   left: 5%;
   width: 40%;
 }
-
+*/
 /* =========================================
    5. MAPA - BOTONES "VER MAPA" (SOLUCIONADO)
    ========================================= */
+/* Cambia esto en tu CSS */
 
 .pin-btn {
-  display: block;            /* Cambiado a block para que baje automáticamente abajo de la hora */
-  width: fit-content;        /* Se adapta al tamaño de la palabra VER MAPA */
-  margin: 10px auto 0 auto;  /* Lo centra perfecto respecto a los textos superiores */
+  display: block;            
+  width: fit-content;       
+  margin: 10px auto 0 auto;  
   position: relative;
-  z-index: 99;               /* Asegura que quede por encima de cualquier capa del fondo */
+  z-index: 99;               
   padding: 6px 10px;
-  font-size: 11px;
+  font-size: 8px;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: #000000 !important; /* Negro pleno para diseño editorial high-end */
+  color: #000000 !important; 
   text-decoration: none;
   cursor: pointer;
 }
@@ -526,10 +558,22 @@ clip-path: inset(15% 0% 0% 0%);
 /* Propiedades asignadas para evitar el error de reglas vacías */
 .pin-ceremonia {
   text-align: center;
+  /* Movemos el botón a la izquierda usando un margen negativo */
+  margin-left: -60px; 
+  
+  /* Lo bajamos un poco más respecto al resto del bloque */
+  margin-top: 105px; 
+  
+  /* Mantenemos el centrado del texto dentro del botón */
+  text-align: center;
+  
+  /* Importante: para que el margen superior funcione, debe ser block o inline-block */
+  display: inline-block;
 }
 
 .pin-fiesta {
   text-align: center;
+  margin-left: -60px;
 }
 
 /* Línea minimalista inferior interactiva (Underline) */
@@ -547,6 +591,18 @@ clip-path: inset(15% 0% 0% 0%);
 
 .pin-btn:hover::after {
   transform: scaleX(1);
+}
+/* Cambia o agrega esto en tu CSS */
+.pin-btn, 
+.pin-btn:link, 
+.pin-btn:visited {
+  color: #000000 !important; /* Fuerza el negro siempre */
+  text-decoration: none;      /* Quita el subrayado azul automático */
+}
+
+/* Y si tienes alguna duda, mantén el color negro en el hover también */
+.pin-btn:hover {
+  color: #000000 !important;
 }
 /* =========================================
    6. TÍTULOS

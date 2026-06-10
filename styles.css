@@ -435,23 +435,25 @@ clip-path: inset(15% 0% 0% 0%);
   display: block;
   mix-blend-mode: multiply;
 }
-/* Nuevo contenedor para el título "Inicio" */
+/* 2. La etiqueta Inicio es hija absoluta */
 .section-label {
   position: absolute;
-  top: -220px; /* Ajusta este valor para subirlo más o menos */
-  left: -30px;
+  top: -1700%;      /* En lugar de -260px, usamos 2% del alto del contenedor */
+  left: 0;
   width: 100%;
-  z-index: 20; /* Asegura que esté por encima de todo */
+  text-align: center;
+  z-index: 20;
 }
 
 .lugar-etiqueta {
   display: inline-block;
   font-family: 'Courier Prime', monospace;
-  font-size: 0.9rem;
+  /* El tamaño de letra se ajusta según el ancho de la pantalla */
+  font-size: 3.5vw; 
   text-transform: uppercase;
-  letter-spacing: 0.6em; /* Un aire editorial más marcado */
-  color: #a60028;
-  padding: 5px 15px;
+  letter-spacing: 0.5em;
+  color: #c52239;
+  padding: 1% 3%;
 }
 /*
  Estilo base para textos sueltos (Ruta, calles)
@@ -524,35 +526,41 @@ clip-path: inset(15% 0% 0% 0%);
 Posiciones de los bloques informativos 
 */
 .block-ceremonia {
-  top: 45%;
-  left: 5%;
+  position: absolute;
+  top: 60%;
+  left: -2%;
+  width: 40%;
+}
+.block-fiesta {
+  position: absolute;
+  bottom: 8%;
+  left: 7%;
   width: 40%;
 }
 
-.block-fiesta {
-  bottom: 8%;
-  left: 5%;
-  width: 40%;
-}
-*/
 /* =========================================
    5. MAPA - BOTONES "VER MAPA" (SOLUCIONADO)
    ========================================= */
 /* Cambia esto en tu CSS */
 
-.pin-btn {
-  display: block;            
-  width: fit-content;       
-  margin: 10px auto 0 auto;  
-  position: relative;
-  z-index: 99;               
-  padding: 6px 10px;
-  font-size: 8px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #000000 !important; 
-  text-decoration: none;
+/* Especificidad máxima para que el navegador nos haga caso */
+ .pin-btn {
+  display: inline-block !important; /* Importante: inline-block achica el botón al tamaño del texto */
+  width: auto !important;
+  margin: 0 !important;             /* Eliminamos márgenes automáticos que lo expanden */
+  padding: 2px 6px !important;      /* Padding mínimo para que se vea elegante */
+  font-size: 8px !important;        /* Tamaño pequeño y legible */
+  letter-spacing: 1px !important;
+  color: #000000 !important;
+  text-decoration: none !important;
   cursor: pointer;
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Forzamos la alineación del padre */
+.map-text-block {
+  text-align: center !important;
 }
 
 /* Propiedades asignadas para evitar el error de reglas vacías */
@@ -576,18 +584,7 @@ Posiciones de los bloques informativos
   margin-left: -60px;
 }
 
-/* Línea minimalista inferior interactiva (Underline) */
-.pin-btn::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 1px;
-  bottom: -2px;
-  left: 0;
-  background-color: #000000;
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
-}
+
 
 .pin-btn:hover::after {
   transform: scaleX(1);

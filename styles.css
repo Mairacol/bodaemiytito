@@ -269,7 +269,7 @@ clip-path: inset(15% 0% 0% 0%);
 
 .scroll-indicator {
   position: absolute;
-  bottom: 26px;
+  bottom: 66px; /*se sube*/
   left: 50%;
   transform: translateX(-50%);
   z-index: 20;

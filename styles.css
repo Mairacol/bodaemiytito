@@ -210,7 +210,7 @@ body::before {
   z-index: 1;
   object-fit: contain;
   animation: filmReveal 2.5s cubic-bezier(0.2, 0, 0.2, 1) both;
-clip-path: inset(15% 0% 0% 0%);
+clip-path: inset(20% 0% 0% 0%);
 }
 
 .hero-content {

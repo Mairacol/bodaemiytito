@@ -1159,6 +1159,9 @@ button:disabled {
     width: auto;
     padding: 10px 40px; /* Puedes ajustar el padding para que se vea más estilizado */
 }
+.boton-oculto {
+  display: none !important;
+}
 .music-btn {
   /* Posicionamiento blindado */
   position: fixed !important;

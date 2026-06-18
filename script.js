@@ -117,13 +117,21 @@ const actualizarIcono = () => {
 
 const arrancarMusica = () => {
   if (!music) return;
+  
   music.play().then(() => {
     actualizarIcono();
+    
+    // ACÁ FORZAMOS LA APARICIÓN DEL BOTÓN
+    if (musicBtn) {
+      musicBtn.style.setProperty('display', 'flex', 'important'); 
+    }
+
     document.removeEventListener('click', arrancarMusica);
     document.removeEventListener('touchstart', arrancarMusica);
   }).catch(() => {});
 };
 
+// OJO ACÁ: Como dice 'document', si hacés clic en CUALQUIER PARTE de la pantalla, arranca.
 document.addEventListener('click', arrancarMusica);
 document.addEventListener('touchstart', arrancarMusica);
 
@@ -139,7 +147,6 @@ if (musicBtn) {
     }
   });
 }
-
 /* =========================================
    4. INTRO SOBRE
    ========================================= */

@@ -1011,7 +1011,7 @@ select.field-error {
 button {
   width: 100%;
   padding: 14px;
-  background: #c4002f;
+  background: #c51630;
   color: white;
   font-family: 'Courier Prime', monospace;
   border: none;
@@ -1176,7 +1176,7 @@ button:disabled {
   -webkit-tap-highlight-color: transparent;
   
   /* Estética */
-  background: #c4002f !important;
+  background: #c51630 !important;
   border: none !important;
   border-radius: 50% !important;
   width: 48px !important;

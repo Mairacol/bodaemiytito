@@ -747,6 +747,18 @@ Posiciones de los bloques informativos
   margin: 10px auto 15px;
   display: block;
 }
+/* Añade un retraso escalonado a cada tarjeta dentro de la grilla */
+.info-grid .info-card:nth-child(1).active {
+  transition-delay: 0.1s;
+}
+
+.info-grid .info-card:nth-child(2).active {
+  transition-delay: 0.3s;
+}
+
+.info-grid .info-card:nth-child(3).active {
+  transition-delay: 0.5s;
+}
 
 /* =========================================
    9. RSVP & FORMULARIO

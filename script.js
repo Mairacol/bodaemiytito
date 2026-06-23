@@ -13,7 +13,8 @@ const hiddenPeopleInput = document.getElementById('peopleCount');
 const selectedDisplay = document.querySelector('#peopleCountCustom .selected-option');
 const submitBtn = document.getElementById('submitBtn');
 const validationCodeInput = document.getElementById('validationCode');
-if (familyName) familyName.innerText = `Familia ${family}`;
+/*if (familyName) familyName.innerText = `Familia ${family}`;*/
+if (familyName) familyName.innerText = family;
 if (slotsText) slotsText.innerText = `Hay ${slots} lugares reservados`;
 
 /* =========================================

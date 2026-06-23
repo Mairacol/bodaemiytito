@@ -491,6 +491,30 @@ clip-path: inset(40% 0% 0% 0%);
 
  Bloques informativos (Iglesia y Fiesta) 
  */
+ .map-content {
+  position: relative; /* Esto es vital para que el contenido absoluto sepa dónde posicionarse */
+}
+
+.map-label-inicio {
+  /* Estilos heredados de .hotel-item */
+  border-top: none !important; /* Esto anula el borde que viene de .hotel-item */
+  padding: 20px 0;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  
+  /* Posicionamiento para que flote sobre la imagen */
+  position: absolute;
+  top: 14%;    /* Ajusta aquí para subir o bajar */
+  left: 6%;   /* Ajusta aquí para mover a la derecha */
+  width: 90%;   /* Ajusta el ancho según necesites */
+  z-index: 10;  /* Asegura que quede encima de la imagen */
+  
+  /* Estilo visual opcional para que se lea mejor */
+    font-size: 14px;
+  color: #333; 
+  font-weight: bold;
+}
 .map-text-block {
   position: absolute;
   text-align: center;

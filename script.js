@@ -15,7 +15,12 @@ const submitBtn = document.getElementById('submitBtn');
 const validationCodeInput = document.getElementById('validationCode');
 /*if (familyName) familyName.innerText = `Familia ${family}`;*/
 if (familyName) familyName.innerText = family;
-if (slotsText) slotsText.innerText = `Hay ${slots} lugares reservados`;
+/*if (slotsText) slotsText.innerText = `Hay ${slots} lugares reservados`;*/
+if (slotsText) {
+    slotsText.innerText = slots === 1 
+        ? `Hay ${slots} lugar reservado` 
+        : `Hay ${slots} lugares reservados`;
+}
 
 /* =========================================
    1. GENERAR CAMPOS AUTOMÁTICAMENTE (NUEVO FLUJO)
